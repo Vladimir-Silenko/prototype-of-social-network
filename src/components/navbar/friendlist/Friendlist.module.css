@@ -1,0 +1,16 @@
+.friendlist {
+    margin: 100px 20px;
+    display: grid;
+    grid-gap: 8px;
+    grid-template-areas:
+        'header header header'
+        'person person person';
+}
+
+.friendlist__header {
+    grid-area: header;
+}
+
+.friendlist Person {
+    grid-area: person;
+}

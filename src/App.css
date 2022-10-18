@@ -1,38 +1,28 @@
-.App {
-  text-align: center;
+body {
+  background-image: url(https://www.vandelaydesign.com/wp-content/uploads/y-so-serious.jpg);
+  color: rgb(25, 36, 71);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.app-wrapper {
+  min-height: 800px;
+  display: grid;
+  background: #fff;
+  grid-template-areas:
+    'header header'
+    'nav content';
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 1px;
+  width: 1200px;
+  margin: 0 auto;
+  -webkit-box-shadow: 0px 1px 10px 2px rgba(34, 60, 80, 0.2);
+  -moz-box-shadow: 0px 1px 10px 2px rgba(34, 60, 80, 0.2);
+  box-shadow: 0px 1px 10px 2px rgba(34, 60, 80, 0.2);
+
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.app-wrapper-content {
+  grid-area: content;
+  background-color: transparent;
+  border-left: 1px solid rgba(171, 171, 171, 0.523);
 }

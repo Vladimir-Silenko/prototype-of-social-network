@@ -1,0 +1,21 @@
+.nav {
+    margin-top: 20px;
+    grid-area: nav;
+    background-color: transparent;
+}
+
+.item {
+    display: inline-block;
+    text-decoration: none;
+    margin: 5px 10px;
+    font-weight: 600;
+    color: rgb(25, 36, 71);
+}
+
+.activeLink {
+    color: rgb(77, 110, 219);
+}
+
+.item:hover {
+    cursor: pointer;
+}

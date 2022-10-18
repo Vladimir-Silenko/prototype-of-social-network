@@ -1,0 +1,51 @@
+.dialog {
+    margin-top: 10px;
+    font-weight: 600;
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: 2fr 8fr;
+    grid-template-areas: 'avatar name'
+        'avatar surname';
+    text-decoration: none;
+    color: rgb(25, 36, 71);
+}
+
+.name {
+    grid-area: name;
+    display: inline-block;
+    margin: 20px 0 0 0px;
+}
+
+.surname {
+    grid-area: surname;
+    display: inline-block;
+    margin: 0 0 10px 0px;
+}
+
+.active {
+    /* color: rgb(77, 110, 219); */
+    color: gold;
+}
+
+.avatar {
+    grid-area: avatar;
+    border-radius: 40px;
+    width: 70px;
+    height: 70px;
+}
+
+/* .dialog::before {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 10px;
+    background-color: rgb(0, 0, 0);
+    border-radius: 50%;
+    margin: 5px;
+}
+
+.dialog:hover {
+    cursor: pointer;
+    color: rgb(77, 110, 219);
+
+} */

@@ -1,0 +1,14 @@
+.message {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    margin-left: 10px;
+    height: 100px;
+    width: 200px;
+    background-color: rgb(229, 229, 229);
+    border-radius: 10px;
+}
+
+.mrgn {
+    margin-left: 250px;
+}

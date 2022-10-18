@@ -1,0 +1,31 @@
+.container {
+    height: 95%;
+    display: grid;
+    grid-template-columns: 2fr 8fr;
+    min-height: 500px;
+}
+
+.dialogs {
+    min-width: 200px;
+    margin-top: 20px;
+    padding: 20px;
+    display: grid;
+    grid-template-rows: 1fr repeat();
+}
+
+.message_container {
+    margin-top: 40px;
+    height: 90%;
+}
+
+.messageContent_container {
+    overflow: scroll;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    margin-top: 10px;
+    height: 50%;
+    width: 90%;
+    padding: 10px;
+    border-radius: 20px;
+}

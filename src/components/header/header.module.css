@@ -1,0 +1,13 @@
+.header {
+    grid-area: header;
+    background: linear-gradient(0deg, rgba(2, 66, 143, 1) 87%, rgba(61, 115, 173, 1) 95%, rgba(118, 150, 228, 1) 100%);
+}
+
+.MySocial {
+    color: hsl(228, 33%, 97%);
+    margin: 8px 10px;
+}
+
+.header img {
+    width: 50px;
+}

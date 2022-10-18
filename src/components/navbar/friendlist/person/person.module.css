@@ -1,0 +1,16 @@
+.person {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.photo {
+    border-radius: 50px;
+    width: 70px;
+    height: 70px;
+}
+
+.name {
+    text-align: center;
+    font-weight: 500;
+}

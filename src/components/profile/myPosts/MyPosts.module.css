@@ -1,0 +1,10 @@
+.postContainer {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+.postContainer textarea {
+    width: 100px;
+}

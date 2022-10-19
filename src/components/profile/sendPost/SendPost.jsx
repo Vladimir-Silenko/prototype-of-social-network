@@ -1,15 +1,22 @@
 import React from 'react'
-import { AddPost } from '../../../redux/state';
 import classes from './SendPost.module.css';
 let SendPost = (props) => {
+    // debugger
     const NewPostEl = React.createRef()
     const SendPost = () => {
+        props.AddPost()
+    }
+    const onPostChange = () => {
         let text = NewPostEl.current.value
-        props.AddPost(text)
+        props.UpdatePostText(text)
     }
     return <div className={classes.sendPost}>
         <h3>My Posts</h3>
-        <textarea ref={NewPostEl} placeholder='Enter your message'></textarea>
+        <textarea
+            onChange={onPostChange}
+            value={props.newPostText}
+            ref={NewPostEl}
+            placeholder="type..." />
         <button onClick={SendPost}>{props.btn}</button>
     </div>
 

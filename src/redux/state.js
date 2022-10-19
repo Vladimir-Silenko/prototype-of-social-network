@@ -1,5 +1,7 @@
+import RenderEntireTree from "../render";
 const State = {
     profile: {
+        newPostText: '',
         postData: [
             { id: 1, post: 'Hey! how are you?', likes: 24, },
             { id: 2, post: 'I am learning react.js', likes: 20, },
@@ -34,9 +36,15 @@ const State = {
         ],
     }
 }
-export const AddPost = (postMessage) => {
-    let newPost = { id: 5, post: postMessage, likes: 0, };
+export const AddPost = () => {
+    let newPost = { id: 5, post: State.profile.newPostText, likes: 0, };
     State.profile.postData.push(newPost);
-    console.log(State.profile.postData)
+    RenderEntireTree(State)
+    State.profile.newPostText = ''
 };
+export const UpdatePostText = (text) => {
+    State.profile.newPostText = text
+    RenderEntireTree(State)
+};
+
 export default State;

@@ -8,7 +8,7 @@ let Profile = (props) => {
             <img src='https://photographylife.com/wp-content/uploads/2020/03/Ultra-Wide-Angle-Panoramas-1.jpg' />
         </div>
         <ProfileInfo />
-        <SendPost AddPost={props.AddPost} btn="Send post" />
+        <SendPost UpdatePostText={props.UpdatePostText} newPostText={props.newPostText} AddPost={props.AddPost} btn="Send post" />
         <MyPosts postData={props.postData} />
     </div>
 }

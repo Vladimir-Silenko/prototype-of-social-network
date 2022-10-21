@@ -10,6 +10,7 @@ import Music from './components/music/Music';
 import Settings from './components/settings/Settings';
 
 const App = (props) => {
+  // debugger
   return (
     <BrowserRouter>
       <div className="app-wrapper">
@@ -17,8 +18,14 @@ const App = (props) => {
         <Navbar friendsData={props.state.navbar.friends} />
         <div className='app-wrapper-content'>
           <Routes>
-            <Route path='/profile' element={<Profile UpdatePostText={props.UpdatePostText} newPostText={props.state.profile.newPostText} postData={props.state.profile.postData} AddPost={props.AddPost} />} />
-            <Route path='/dialogs' element={<Dialogs dialogsData={props.state.messages.dialogsData} messageData={props.state.messages.messageData} />} />
+            <Route path='/profile' element={<Profile UpdatePostText={props.store.UpdatePostText} newPostText={props.state.profile.newPostText} postData={props.state.profile.postData} AddPost={props.store.AddPost} />} />
+            <Route path='/dialogs' element={<Dialogs
+              AddMessage={props.store.AddMessage}
+              dialogsData={props.state.messages.dialogsData}
+              messageData={props.state.messages.messageData}
+              UpdateMessageText={props.store.UpdateMessageText}
+              newMessageText={props.state.messages.newMessageText} />}
+            />
             <Route path='/news' element={<News />} />
             <Route path='/music' element={<Music />} />
             <Route path='/settings' element={<Settings />} />

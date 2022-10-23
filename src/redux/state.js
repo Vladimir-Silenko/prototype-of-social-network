@@ -1,5 +1,5 @@
 const Store = {
-    State: {
+    _State: {
         profile: {
             newPostText: '',
             postData: [
@@ -17,7 +17,7 @@ const Store = {
                 { name: 'Inga', surname: 'Alieva', ava: 'https://pbs.twimg.com/profile_images/755466885953679360/cKVxXXWg_400x400.jpg', age: 28, id: 5, },
                 { name: 'Dasha', surname: 'Deshko', ava: 'https://pic.rutubelist.ru/user/3f/a4/3fa484531693f2716dc6d5f4ec102cff.jpg', age: 27, id: 6, },
             ],
-            newMessageText: 'yes',
+            newMessageText: '',
             messageData:
                 [
                     { id: 1, message: "Hey dad! How is it goin'?" },
@@ -37,33 +37,51 @@ const Store = {
             ],
         }
     },
-
-    AddPost() {
-        let newPost = { id: 5, post: Store.State.profile.newPostText, likes: 0, };
-        Store.State.profile.postData.unshift(newPost);
-        Store.RenderEntireTree(Store.State)
-        Store.State.profile.newPostText = ''
-    },
-    UpdatePostText(text) {
-        Store.State.profile.newPostText = text
-        Store.RenderEntireTree(Store.State)
-    },
-    AddMessage() {
-        let newMessage = { id: 2, you: 'you', message: Store.State.messages.newMessageText };
-        Store.State.messages.messageData.push(newMessage)
-        Store.RenderEntireTree(Store.State);
-        Store.State.profile.newPostText = ''
-    },
-    UpdateMessageText(text) {
-        Store.State.messages.newMessageText = text;
-        Store.RenderEntireTree(Store.State)
-    },
-    Subscribe(observer) {
-        Store.RenderEntireTree = observer
-    },
-    RenderEntireTree() {
+    _CallSubscriber() {
         console.log('state changed')
-    }
+    },
+    getState() { return this._State },
+    dispatch(action) {
+        if (action.type === 'AddPost') {
+            let newPost = { id: 5, post: this._State.profile.newPostText, likes: 0, };
+            this._State.profile.postData.unshift(newPost);
+            this._CallSubscriber(this._State)
+            this._State.profile.newPostText = ''
+        }
+        else if (action.type === 'UpdatePostText') {
+            this._State.profile.newPostText = action.newText
+            this._CallSubscriber(this._State)
+        }
+        else if (action.type === 'AddMessage') {
+            let newMessage = { id: 2, you: 'you', message: this._State.messages.newMessageText };
+            this._State.messages.messageData.push(newMessage)
+            this._CallSubscriber(this._State);
+            this._State.profile.newPostText = ''
+        }
+        else if (action.type === 'UpdateMessageText') {
+            this._State.messages.newMessageText = action.newText;
+            this._CallSubscriber(this._State)
+        }
+    },
+    // AddPost() {
+    // },
+    // UpdatePostText(text) {
+    //     this._State.profile.newPostText = text
+    //     this._CallSubscriber(this._State)
+    // },
+    // AddMessage() {
+    //     let newMessage = { id: 2, you: 'you', message: this._State.messages.newMessageText };
+    //     this._State.messages.messageData.push(newMessage)
+    //     this._CallSubscriber(this._State);
+    //     this._State.profile.newPostText = ''
+    // },
+    // UpdateMessageText(text) {
+    //     this._State.messages.newMessageText = text;
+    //     this._CallSubscriber(this._State)
+    // },
+    Subscribe(observer) {
+        Store._CallSubscriber = observer
+    },
 }
 
 

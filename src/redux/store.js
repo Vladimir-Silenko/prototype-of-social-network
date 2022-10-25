@@ -1,5 +1,9 @@
-const Store = {
-    _State: {
+import DialogsReducer from "./dialogs-reducer";
+import NavbarReducer from "./navbar-reducer";
+import ProfileReducer from "./profile-reducer";
+
+const store = {
+    _state: {
         profile: {
             newPostText: '',
             postData: [
@@ -42,49 +46,17 @@ const Store = {
     },
     getState() { return this._State },
     dispatch(action) {
-        if (action.type === 'AddPost') {
-            let newPost = { id: 5, post: this._State.profile.newPostText, likes: 0, };
-            this._State.profile.postData.unshift(newPost);
-            this._CallSubscriber(this._State)
-            this._State.profile.newPostText = ''
-        }
-        else if (action.type === 'UpdatePostText') {
-            this._State.profile.newPostText = action.newText
-            this._CallSubscriber(this._State)
-        }
-        else if (action.type === 'AddMessage') {
-            let newMessage = { id: 2, you: 'you', message: this._State.messages.newMessageText };
-            this._State.messages.messageData.push(newMessage)
-            this._CallSubscriber(this._State);
-            this._State.profile.newPostText = ''
-        }
-        else if (action.type === 'UpdateMessageText') {
-            this._State.messages.newMessageText = action.newText;
-            this._CallSubscriber(this._State)
-        }
+        this._state.profile = ProfileReducer(this._state.profile, action)
+        this._state.messages = DialogsReducer(this._state.messages, action)
+        this._state.navbar = NavbarReducer(this._state.navbar, action)
+        this._CallSubscriber(this._State)
     },
-    // AddPost() {
-    // },
-    // UpdatePostText(text) {
-    //     this._State.profile.newPostText = text
-    //     this._CallSubscriber(this._State)
-    // },
-    // AddMessage() {
-    //     let newMessage = { id: 2, you: 'you', message: this._State.messages.newMessageText };
-    //     this._State.messages.messageData.push(newMessage)
-    //     this._CallSubscriber(this._State);
-    //     this._State.profile.newPostText = ''
-    // },
-    // UpdateMessageText(text) {
-    //     this._State.messages.newMessageText = text;
-    //     this._CallSubscriber(this._State)
-    // },
     Subscribe(observer) {
-        Store._CallSubscriber = observer
+        this._CallSubscriber = observer
     },
-}
+};
 
 
 
 
-export default Store;
+export default store;

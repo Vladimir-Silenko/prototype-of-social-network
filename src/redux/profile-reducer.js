@@ -17,7 +17,7 @@ const ProfileReducer = (state = initialState, action) => {
             return state
         case AddPost:
             let newPost = { id: 5, post: state.newPostText, likes: 0, };
-            state.postData.push(newPost);
+            state.postData.unshift(newPost);
             state.newPostText = ''
             return state
         default:

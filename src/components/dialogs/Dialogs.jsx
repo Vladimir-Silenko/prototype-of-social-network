@@ -1,12 +1,15 @@
 import DialogItem from './DialogItems/DialogItem'
 import styles from './Dialogs.module.css'
 import Messages from './messages/Messages';
-import SendMessage from './messages/SendMessage';
-
+import SendMessageContainer from './messages/SendMessageContainer';
+import { useSelector } from 'react-redux';
 const Dialogs = (props) => {
-    // debugger
-    let dialogs = props.dialogsData.map(item => <DialogItem ava={item.ava} name={item.name} surname={item.surname} key={item.id} />);
-    let messages = props.messageData.map(item => <Messages id={item.id} content={item.message} you={item.you} />)
+
+    let dlgs = useSelector(state => state.messages.dialogsData)
+    let msgs = useSelector(state => state.messages.messageData)
+    console.log(dlgs)
+    let dialogs = dlgs.map(item => <DialogItem ava={item.ava} name={item.name} surname={item.surname} key={item.id} />);
+    let messages = msgs.map(item => <Messages id={item.id} content={item.message} you={item.you} />)
     return (
         <div className={styles.container}>
             <div className={styles.dialogs}>
@@ -16,9 +19,8 @@ const Dialogs = (props) => {
                 <div className={styles.messageContent_container}>
                     {messages}
                 </div>
-                <SendMessage
-                    newMessageText={props.newMessageText}
-                    dispatch={props.dispatch} />
+                <SendMessageContainer
+                    store={props.store} />
             </div>
 
         </div>

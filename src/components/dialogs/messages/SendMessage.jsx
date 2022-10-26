@@ -1,13 +1,11 @@
 import React from 'react'
-import { sendMessageActionCreator, UpdateMessageTextActionCreator } from '../../../redux/dialogs-reducer'
 import styles from './SendMessage.module.css'
 const SendMessage = (props) => {
-    // debugger
     const Update = (e) => {
         let text = e.target.value
-        props.dispatch(UpdateMessageTextActionCreator(text))
+        props.Update(text)
     }
-    const Send = () => props.dispatch(sendMessageActionCreator())
+    const Send = () => props.Send()
     return <div className={styles.sendMessage}>
         <textarea
             placeholder='Type...'

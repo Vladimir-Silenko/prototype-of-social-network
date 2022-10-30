@@ -7,9 +7,8 @@ const Dialogs = (props) => {
 
     let dlgs = useSelector(state => state.messages.dialogsData)
     let msgs = useSelector(state => state.messages.messageData)
-    console.log(dlgs)
     let dialogs = dlgs.map(item => <DialogItem ava={item.ava} name={item.name} surname={item.surname} key={item.id} />);
-    let messages = msgs.map(item => <Messages id={item.id} content={item.message} you={item.you} />)
+    let messages = msgs.map(item => <Messages key={item.id} content={item.message} you={item.you} />)
     return (
         <div className={styles.container}>
             <div className={styles.dialogs}>

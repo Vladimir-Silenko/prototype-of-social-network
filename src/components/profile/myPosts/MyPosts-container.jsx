@@ -6,7 +6,6 @@ import MyPosts from './MyPosts';
 
 const MyPostsContainer = (props) => {
     const posts = useSelector(state => state.profile.postData)
-    console.log(posts)
     return <MyPosts posts={posts} />
 }
 export default MyPostsContainer;

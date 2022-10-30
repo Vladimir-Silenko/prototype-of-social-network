@@ -1,0 +1,27 @@
+.users {
+    display: grid;
+    grid-template-areas:
+        "photo personal location"
+        "follow status  location"
+    ;
+
+}
+
+.photo {
+    grid-area: photo;
+    border-radius: 50px;
+    width: 70px;
+    height: 70px;
+}
+
+.follow_btn {
+    grid-area: follow;
+}
+
+.name {
+    grid-area: personal;
+}
+
+.status {
+    grid-area: status;
+}

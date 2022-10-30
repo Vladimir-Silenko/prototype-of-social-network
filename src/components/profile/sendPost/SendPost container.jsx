@@ -1,6 +1,5 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import myContext from '../../../createContext';
 import { addPostActionCreator, UpdatePostTextActionCreator } from '../../../redux/profile-reducer';
 import SendPost from './SendPost';
 const SendPostContainer = (props) => {

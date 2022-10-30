@@ -1,5 +1,3 @@
-import MyPosts from './myPosts/MyPosts';
-import SendPost from './sendPost/SendPost';
 import classes from './profile.module.css'
 import ProfileInfo from './profileInfo/ProfileInfo';
 import SendPostContainer from './sendPost/SendPost container';

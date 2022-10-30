@@ -8,10 +8,7 @@ import Profile from './components/profile/profile';
 import News from './components/news/News';
 import Music from './components/music/Music';
 import Settings from './components/settings/Settings';
-import myContext from './createContext';
-import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import store from './redux/redux-store';
+import { Users } from './components/Users/Users';
 const App = (props) => {
   // debugger
   return (
@@ -25,6 +22,7 @@ const App = (props) => {
           <Route path='/news' element={<News />} />
           <Route path='/music' element={<Music />} />
           <Route path='/settings' element={<Settings />} />
+          <Route path='/users' element={<Users />}></Route>
         </Routes>
       </div>
 

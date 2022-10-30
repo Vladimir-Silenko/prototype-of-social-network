@@ -13,25 +13,36 @@ let initialstate = {
     messageData:
         [
             { id: 1, message: "Hey dad! How is it goin'?" },
-            { id: 2, you: 'you', message: "I miss u so much" },
-            { id: 2, you: 'you', message: "I miss u so much" },
-            { id: 3, message: "Waiting for your return" },
-            { id: 2, you: 'you', message: "I hope it will be soon" },
-            { id: 2, you: 'you', message: "I hope it will be soon" },
-            { id: 2, you: 'you', message: "I hope it will be soon" },
+            { id: 22, you: 'you', message: "I miss u so much" },
+            { id: 21, you: 'you', message: "I miss u so much" },
+            { id: 34, message: "Waiting for your return" },
+            { id: 24, you: 'you', message: "I hope it will be soon" },
+            { id: 26, you: 'you', message: "I hope it will be soon" },
+            { id: 25, you: 'you', message: "I hope it will be soon" },
         ],
 }
 const DialogsReducer = (state = initialstate, action) => {
     switch (action.type) {
-        case AddMessage:
-            let newMessage = { id: 2, you: 'you', message: state.newMessageText };
-            state.messageData.push(newMessage)
-            state.newMessageText = ''
-            return state
+        case AddMessage: {
+            let newMessageText = state.newMessageText
+            return {
+                ...state,
+                messageData: [...state.messageData, {
+                    id: state.messageData.length + 1,
+                    you: 'you',
+                    message: newMessageText
+                }],
+                newMessageText: ''
+            }
 
-        case UpdateMessageText:
-            state.newMessageText = action.newText;
-            return state
+        }
+        case UpdateMessageText: {
+            return {
+                ...state,
+                newMessageText: action.newText
+            }
+
+        }
         default:
             return state
     };

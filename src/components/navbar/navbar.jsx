@@ -12,6 +12,7 @@ let Navbar = (props) => {
             <div ><NavLink to="news" className={classSwitch} >News</NavLink></div>
             <div ><NavLink to="music" className={classSwitch} >Music</NavLink></div>
             <div ><NavLink to="settings" className={classSwitch} >Settings</NavLink></div>
+            <div ><NavLink to="Users" className={classSwitch} >Users</NavLink></div>
         </nav>
         <Friendlist friendsData={props.friendsData} />
     </div>

@@ -1,9 +1,13 @@
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
+const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 let initialstate = {
-    users: [
-    ],
+    users: [],
+    totalCount: 30,
+    pageSize: 100,
+    currentPage: 1,
 }
 
 const UsersReduser = (state = initialstate, action) => {
@@ -29,7 +33,19 @@ const UsersReduser = (state = initialstate, action) => {
         case SET_USERS: {
             return {
                 ...state, //копируем стейт
-                users: [...state.users, ...action.users] // переназначаем для юзерз массив: копируем statе.users и склеиваем action.users
+                users: action.users // переназначаем для юзерз массив: копируем statе.users и склеиваем action.users
+            }
+        }
+        case SET_CURRENT_PAGE: {
+            return {
+                ...state,
+                currentPage: action.currentPage
+            }
+        }
+        case SET_TOTAL_COUNT: {
+            return {
+                ...state,
+                totalCount: action.count
             }
         }
         default:
@@ -40,5 +56,7 @@ const UsersReduser = (state = initialstate, action) => {
 export let followAC = (userId) => ({ type: FOLLOW, userId })
 export let unFollowAC = (userId) => ({ type: UNFOLLOW, userId })
 export let setUsersAC = (users) => ({ type: SET_USERS, users })
+export let setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
+export let setTotalCountAC = (totalUsersCount) => ({ type: SET_TOTAL_COUNT, count: totalUsersCount })
 
 export default UsersReduser

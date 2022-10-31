@@ -8,7 +8,8 @@ import Profile from './components/profile/profile';
 import News from './components/news/News';
 import Music from './components/music/Music';
 import Settings from './components/settings/Settings';
-import { Users } from './components/Users/Users';
+// import { Users } from './components/Users/Users';
+import { UsersContainer } from './components/Users/UsersContainer';
 const App = (props) => {
   // debugger
   return (
@@ -22,7 +23,7 @@ const App = (props) => {
           <Route path='/news' element={<News />} />
           <Route path='/music' element={<Music />} />
           <Route path='/settings' element={<Settings />} />
-          <Route path='/users' element={<Users />}></Route>
+          <Route path='/users' element={<UsersContainer />}></Route>
         </Routes>
       </div>
 

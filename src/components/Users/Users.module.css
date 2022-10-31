@@ -26,3 +26,19 @@
 .status {
     grid-area: status;
 }
+
+.selectedItem {
+    font-weight: bold;
+}
+
+.pageItem {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 3px;
+}
+
+.page {
+    width: 100%;
+    text-align: center;
+    margin: 20px auto;
+}

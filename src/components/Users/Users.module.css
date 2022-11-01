@@ -42,3 +42,8 @@
     text-align: center;
     margin: 20px auto;
 }
+
+.loader {
+    width: 200px;
+    margin: 10% 35%;
+}

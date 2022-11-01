@@ -3,11 +3,9 @@ import { useEffect } from 'react'
 const Users = (props) => {
     const classNames = require('classnames')
     const pagesCount = Math.ceil(props.st.totalCount / props.st.pageSize) //вычисляем количество страниц, и округляем
-    useEffect(() => props.GetUsers(props.st, props.SetUsers, props.st.currentPage, props.st.pageSize)) //рендеринг юзеров
-
+    useEffect(() => { props.GetUsers(props.st, props.SetUsers, props.st.currentPage, props.st.pageSize) }, [null]) //рендеринг юзеров
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
-
     return <div>
         <div className={styles.page}> {pages.map(item => {
             return <span

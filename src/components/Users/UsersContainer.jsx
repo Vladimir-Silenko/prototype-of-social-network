@@ -5,6 +5,7 @@ import {
     followAC, unFollowAC, setUsersAC,
     setCurrentPageAC, setTotalCountAC, toggleIsFetchingAC
 } from '../../redux/users-reducer'
+import { useEffect } from 'react'
 import { Users } from './Users'
 import loader from '../../photo/loader.gif'
 
@@ -26,7 +27,6 @@ const UsersContainer = () => {
 
         })
     }
-
     let OnpageChanged = (current, users, pageNumber) => {
         current(pageNumber)
         toggleIsFetching(true);

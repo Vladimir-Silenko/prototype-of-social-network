@@ -4,7 +4,6 @@ import Messages from './messages/Messages';
 import SendMessageContainer from './messages/SendMessageContainer';
 import { useSelector } from 'react-redux';
 const Dialogs = (props) => {
-
     let dlgs = useSelector(state => state.messages.dialogsData)
     let msgs = useSelector(state => state.messages.messageData)
     let dialogs = dlgs.map(item => <DialogItem ava={item.ava} name={item.name} surname={item.surname} key={item.id} />);

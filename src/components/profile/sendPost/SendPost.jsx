@@ -1,8 +1,6 @@
 import React from 'react'
 import classes from './SendPost.module.css';
 let SendPost = (props) => {
-    // debugger
-    const Send = () => props.Send()
     const onPostChange = (e) => {
         let text = e.target.value
         props.Change(text)
@@ -13,7 +11,7 @@ let SendPost = (props) => {
             onChange={onPostChange}
             value={props.newPostText}
             placeholder="type..." />
-        <button onClick={Send}>Send Post</button>
+        <button onClick={() => props.Send()}>Send Post</button>
     </div>
 
 }

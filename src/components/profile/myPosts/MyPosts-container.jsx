@@ -1,6 +1,4 @@
 
-import Post from './post/Post';
-import classes from './MyPosts.module.css';
 import { useSelector } from 'react-redux';
 import MyPosts from './MyPosts';
 

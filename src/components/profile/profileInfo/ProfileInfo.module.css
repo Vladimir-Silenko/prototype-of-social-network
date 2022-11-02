@@ -1,3 +1,22 @@
-.descriptionBlock {
+.main_info {
     padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr 5fr;
+    grid-template-areas: 'avatar contacts';
+    grid-gap: 10px;
+}
+
+.contacts {
+    grid-area: contacts;
+    display: block;
+}
+
+.avatar {
+    grid-area: avatar;
+}
+
+.fullname {
+    font-weight: bold;
+    font-size: 24px;
+    text-transform: uppercase;
 }

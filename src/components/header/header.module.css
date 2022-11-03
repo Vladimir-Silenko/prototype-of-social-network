@@ -1,5 +1,7 @@
 .header {
     grid-area: header;
+    display: flex;
+    justify-content: space-between;
     background: linear-gradient(0deg, rgba(2, 66, 143, 1) 87%, rgba(61, 115, 173, 1) 95%, rgba(118, 150, 228, 1) 100%);
 }
 
@@ -10,4 +12,14 @@
 
 .header img {
     width: 50px;
+}
+
+.login {
+    /* grid-area: headerRIGHT; */
+    display: inline-block;
+    color: hsl(228, 33%, 97%);
+    font-size: 24px;
+    text-decoration: none;
+    margin: 15px 10px;
+    margin-left: 950px;
 }

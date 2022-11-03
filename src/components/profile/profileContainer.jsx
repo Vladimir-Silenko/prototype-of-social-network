@@ -11,11 +11,11 @@ let ProfileContainer = (props) => {
     const st = useSelector(state => state.profile)
     const dispatch = useDispatch()
     const params = useParams()
-    console.log(params)
     useEffect(() => {
         axios.get(`https://social-network.samuraijs.com/api/1.0/profile/${params.userId}`).then(response => {
             dispatch(setUserProfileAC(response.data))
         })
+
     }, [null])
 
     return <div >
@@ -28,7 +28,7 @@ let ProfileContainer = (props) => {
             state={st.profile}
 
         />
-        <SendPostContainer />
+        <SendPostContainer state={st} />
         <MyPostsContainer />
     </div >
 }

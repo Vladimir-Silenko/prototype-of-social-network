@@ -2,6 +2,7 @@ import styles from './Users.module.css'
 import { useEffect, } from 'react'
 import { NavLink } from 'react-router-dom'
 const Users = (props) => {
+    // debugger
     const classNames = require('classnames')
     const pagesCount = Math.ceil(props.st.totalCount / props.st.pageSize) //вычисляем количество страниц, и округляем
     useEffect(() => { props.GetUsers(props.st, props.SetUsers, props.st.currentPage, props.st.pageSize) }, [null]) //рендеринг юзеров

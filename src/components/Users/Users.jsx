@@ -1,4 +1,5 @@
 import styles from './Users.module.css'
+import axios from 'axios'
 import { useEffect, } from 'react'
 import { NavLink } from 'react-router-dom'
 const Users = (props) => {
@@ -34,8 +35,37 @@ const Users = (props) => {
                 </NavLink>
 
                 <div className={styles.follow_btn}>
-                    {u.followed ? <button onClick={() => props.UnFollow(u.id)}>unfollow</button>
-                        : <button onClick={() => props.Follow(u.id)}>follow</button>}
+                    {u.followed ? <button onClick={() => {
+
+                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                            {
+                                withCredentials: true,
+                                headers: { "API-KEY": '9a9f90f9-3ad2-4322-91d2-0bb20b5233fa' }
+                            }
+                        ).then(response => {
+
+                            if (response.data.resultCode == 0) {
+                                props.UnFollow(u.id)
+                            }
+                        })
+                    }}>unfollow</button>
+
+
+                        : <button onClick={() => {
+                            axios.post(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
+                                {},
+                                {
+                                    withCredentials: true,
+                                    headers: { "API-KEY": '9a9f90f9-3ad2-4322-91d2-0bb20b5233fa' }
+                                }
+                            ).then(response => {
+                                if (response.data.resultCode == 0) {
+                                    props.Follow(u.id)
+
+                                }
+                            })
+                        }}>follow</button>}
+
                 </div>
 
             </span>

@@ -12,7 +12,7 @@ const HeaderContainer = (props) => {
             .then(response => {
                 let { id, email, login } = response.data.data
                 dispatch(authReducerAC(id, email, login))
-                console.log(st)
+                console.log(response.data.data)
             })
     }
 

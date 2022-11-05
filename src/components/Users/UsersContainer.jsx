@@ -1,42 +1,52 @@
-import axios from 'axios'
 import styles from './Users.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import {
     followAC, unFollowAC, setUsersAC,
     setCurrentPageAC, setTotalCountAC, toggleIsFetchingAC
 } from '../../redux/users-reducer'
-import { useEffect } from 'react'
 import { Users } from './Users'
 import loader from '../../photo/loader.gif'
-
+import { ChangeUserPage, FollowUser, GetAllUsers, UnFollowUser } from '../../api/useApi'
 const UsersContainer = () => {
     const st = useSelector(state => state.users)
     const dispatch = useDispatch()
     const userPhotoUrl = 'https://thumbs.dreamstime.com/b/%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9-%D0%BC-%D0%B0-%D0%B5%D0%BD%D0%B5%D1%86-39968623.jpg'
-    const Follow = (userId) => { dispatch(followAC(userId)) }
-    const UnFollow = (userId) => dispatch(unFollowAC(userId))
     const SetUsers = (users) => dispatch(setUsersAC(users))
     const SetCurrent = (currentPage) => dispatch(setCurrentPageAC(currentPage))
     const toggleIsFetching = (isFetching) => dispatch(toggleIsFetchingAC(isFetching))
-    const GetUsers = (state, func, current, pageSize) => {
+
+    const Follow = (userId) => {
+        FollowUser(userId).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(followAC(userId))
+            }
+        })
+    }
+
+    const UnFollow = (userId) => {
+        UnFollowUser(userId).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(unFollowAC(userId))
+            }
+        })
+
+    }
+
+    const GetUsers = (func, current, pageSize) => {
         toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${current}&count=${pageSize}`,
-            { withCredentials: true }
-        ).then(response => {
+        GetAllUsers(current, pageSize).then(data => {
             toggleIsFetching(false);
-            func(response.data.items)
-            dispatch(setTotalCountAC(response.data.totalCount))
+            func(data.items)
+            dispatch(setTotalCountAC(data.totalCount))
 
         })
     }
-    let OnpageChanged = (current, users, pageNumber) => {
+    let OnpageChanged = (current, users, pageNumber,) => {
         current(pageNumber)
         toggleIsFetching(true);
-        axios.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${st.pageSize}`,
-            { withCredentials: true }
-        ).then(response => {
+        ChangeUserPage(pageNumber, st.pagesize).then(data => {
             toggleIsFetching(false);
-            users(response.data.items);
+            users(data.items);
         })
     }
     return (<>

@@ -7,16 +7,29 @@
 
 }
 
+.user_card {
+    border: 1px solid black;
+}
+
 .photo {
     grid-area: photo;
     border-radius: 50px;
     width: 70px;
     height: 70px;
-    border: 1px solid blue;
+    border: 1px solid rgb(157, 157, 214);
 }
 
 .follow_btn {
     grid-area: follow;
+
+
+}
+
+.follow_btn button {
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(0deg, rgba(2, 66, 143, 1) 87%, rgba(61, 115, 173, 1) 95%, rgba(118, 150, 228, 1) 100%);
 }
 
 .name {
@@ -38,9 +51,31 @@
 }
 
 .page {
-    width: 100%;
+    /* display: inline; */
+    width: 80%;
     text-align: center;
     margin: 20px auto;
+    height: 20px;
+    overflow: hidden;
+}
+
+.page_wrap {
+    display: flex;
+    width: 40%;
+    margin: 0 auto;
+}
+
+.pageSwitch__btn {
+    height: 20px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    margin-top: 17px;
+    font-weight: bold;
+}
+
+.pageSwitch__btn:hover {
+    cursor: pointer;
 }
 
 .loader {

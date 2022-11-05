@@ -1,5 +1,6 @@
 .header {
     grid-area: header;
+    overflow-x: hidden;
     display: flex;
     justify-content: space-between;
     background: linear-gradient(0deg, rgba(2, 66, 143, 1) 87%, rgba(61, 115, 173, 1) 95%, rgba(118, 150, 228, 1) 100%);

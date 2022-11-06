@@ -26,6 +26,7 @@
 }
 
 .follow_btn button {
+    outline: none;
     padding: 5px 15px;
     border-radius: 10px;
     color: #fff;

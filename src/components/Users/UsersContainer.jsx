@@ -1,7 +1,7 @@
 import styles from './Users.module.css'
 import { useDispatch, useSelector } from 'react-redux'
 import {
-    followAC, unFollowAC, setUsersAC,
+    followAC, unFollowAC, setUsersAC, toggleIsFollowingAC,
     setCurrentPageAC, setTotalCountAC, toggleIsFetchingAC
 } from '../../redux/users-reducer'
 import { Users } from './Users'
@@ -14,19 +14,24 @@ const UsersContainer = () => {
     const SetUsers = (users) => dispatch(setUsersAC(users))
     const SetCurrent = (currentPage) => dispatch(setCurrentPageAC(currentPage))
     const toggleIsFetching = (isFetching) => dispatch(toggleIsFetchingAC(isFetching))
+    const toggleIsFollowing = (isFetching, userId) => dispatch(toggleIsFollowingAC(isFetching, userId))
 
     const Follow = (userId) => {
+        toggleIsFollowing(true, userId)
         FollowUser(userId).then(data => {
             if (data.resultCode == 0) {
                 dispatch(followAC(userId))
+                toggleIsFollowing(false, userId)
             }
         })
     }
 
     const UnFollow = (userId) => {
+        toggleIsFollowing(true, userId)
         UnFollowUser(userId).then(data => {
             if (data.resultCode == 0) {
                 dispatch(unFollowAC(userId))
+                toggleIsFollowing(false, userId)
             }
         })
 
@@ -52,6 +57,7 @@ const UsersContainer = () => {
     return (<>
         {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
         <Users OnpageChanged={OnpageChanged}
+            toggleIsFollowing={toggleIsFollowing}
             toggleIsFetching={toggleIsFetching}
             GetUsers={GetUsers}
             Follow={Follow}

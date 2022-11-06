@@ -7,7 +7,9 @@ const Users = (props) => {
     // debugger
     const classNames = require('classnames')
     const pagesCount = Math.ceil(props.st.totalCount / props.st.pageSize) //вычисляем количество страниц, и округляем
-    useEffect(() => { props.GetUsers(props.SetUsers, props.st.currentPage, props.st.pageSize) }, [null]) //рендеринг юзеров
+    useEffect(() => {
+        props.GetUsers(props.SetUsers, props.st.currentPage, props.st.pageSize)
+    }, [null]) //рендеринг юзеров
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
 
@@ -36,22 +38,9 @@ const Users = (props) => {
                 </NavLink>
 
                 <div className={styles.follow_btn}>
-                    {u.followed ? <button onClick={() => {
-
-                        axios.delete(`https://social-network.samuraijs.com/api/1.0/follow/${u.id}`,
-                            {
-                                withCredentials: true,
-                                headers: { "API-KEY": '9a9f90f9-3ad2-4322-91d2-0bb20b5233fa' }
-                            }
-                        ).then(response => {
-
-                            if (response.data.resultCode == 0) {
-                                props.UnFollow(u.id)
-                            }
-                        })
-                    }}>unfollow</button> : <button onClick={() => {
-                        props.Follow(u.id)
-                    }}>follow</button>}
+                    {u.followed ?
+                        <button disabled={props.st.toggleFollowing.some(id => id === u.id)} onClick={() => { props.UnFollow(u.id) }}>unfollow</button>
+                        : <button disabled={props.st.toggleFollowing.some(id => id === u.id)} onClick={() => { props.Follow(u.id) }}>follow</button>}
 
                 </div>
 

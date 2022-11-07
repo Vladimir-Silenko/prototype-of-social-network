@@ -1,14 +1,16 @@
 import styles from './Users.module.css'
-import axios from 'axios'
 import { useEffect, } from 'react'
 import { NavLink } from 'react-router-dom'
 import { FollowUser } from '../../api/useApi'
+import { GetUsersThunkCreator, OnpageChanged } from '../../redux/users-reducer'
+import { useDispatch } from 'react-redux'
 const Users = (props) => {
     // debugger
+    const dispatch = useDispatch()
     const classNames = require('classnames')
     const pagesCount = Math.ceil(props.st.totalCount / props.st.pageSize) //вычисляем количество страниц, и округляем
     useEffect(() => {
-        props.GetUsers(props.SetUsers, props.st.currentPage, props.st.pageSize)
+        dispatch(GetUsersThunkCreator(props.st.currentPage, props.st.pageSize))
     }, [null]) //рендеринг юзеров
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
@@ -19,12 +21,13 @@ const Users = (props) => {
         <div className={styles.page_wrap}> <button className={styles.pageSwitch__btn}>{'<<'}</button> <div className={styles.page}> {pages.map(item => {
 
             return <span
-                onClick={() => props.OnpageChanged(props.SetCurrent, props.SetUsers, item)}
+                onClick={() => dispatch(OnpageChanged(item))}
                 className={props.st.currentPage === item ? classNames(styles.pageItem, styles.selectedItem)
                     : classNames(styles.pageItem)}>
                 {item}
             </span>
         })}
+
         </div><button className={styles.pageSwitch__btn}>{'>>'}</button> </div>
 
         {props.st.users.map(u => <div className={styles.user}>

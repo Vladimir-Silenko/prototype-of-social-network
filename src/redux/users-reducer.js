@@ -1,3 +1,4 @@
+import { GetAllUsers, ChangeUserPage } from "../api/useApi"
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -77,4 +78,29 @@ export let setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, curren
 export let setTotalCountAC = (totalUsersCount) => ({ type: SET_TOTAL_COUNT, count: totalUsersCount })
 export let toggleIsFetchingAC = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
 export let toggleIsFollowingAC = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING, isFetching: isFetching, userId })
+
+export const GetUsersThunkCreator = (currentPage, pageSize) => {
+    return (dispatch) => {
+        dispatch(toggleIsFetchingAC(true))
+        GetAllUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetchingAC(false));
+            dispatch(setUsersAC(data.items))
+            dispatch(setTotalCountAC(data.totalCount))
+        })
+    }
+}
+
+export let OnpageChanged = (pageNumber) => {
+
+    return (dispatch) => {
+        dispatch(setCurrentPageAC(pageNumber))
+        dispatch(toggleIsFetchingAC(true));
+        ChangeUserPage(pageNumber,
+            initialstate.pageSize).then(data => {
+                dispatch(toggleIsFetchingAC(false));
+                dispatch(setUsersAC(data.items));
+            })
+    }
+}
+
 export default UsersReduser

@@ -1,4 +1,4 @@
-import { GetAllUsers, ChangeUserPage } from "../api/useApi"
+import { GetAllUsers, ChangeUserPage, FollowUser, UnFollowUser } from "../api/useApi"
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -100,6 +100,28 @@ export let OnpageChanged = (pageNumber) => {
                 dispatch(toggleIsFetchingAC(false));
                 dispatch(setUsersAC(data.items));
             })
+    }
+}
+export const Follow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleIsFollowingAC(true, userId))
+        FollowUser(userId).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(followAC(userId))
+                dispatch(toggleIsFollowingAC(false, userId))
+            }
+        })
+    }
+}
+export const UnFollow = (userId) => {
+    return (dispatch) => {
+        dispatch(toggleIsFollowingAC(true, userId))
+        UnFollowUser(userId).then(data => {
+            if (data.resultCode == 0) {
+                dispatch(unFollowAC(userId))
+                dispatch(toggleIsFollowingAC(false, userId))
+            }
+        })
     }
 }
 

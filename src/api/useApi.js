@@ -21,5 +21,8 @@ const UnFollowUser = (userId) => {
 const GetAllUsers = (current, pageSize) => {
     return instance.get(`users?page=${current}&count=${pageSize}`).then(response => response.data)
 }
+const AuthMe = () => {
+    return (instance.get('auth/me')).then(response => response.data)
+}
 
-export { ChangeUserPage, FollowUser, UnFollowUser, GetAllUsers }
+export { ChangeUserPage, FollowUser, UnFollowUser, GetAllUsers, AuthMe }

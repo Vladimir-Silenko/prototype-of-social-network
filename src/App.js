@@ -7,13 +7,13 @@ import ProfileContainer from './components/profile/profileContainer';
 import News from './components/news/News';
 import Music from './components/music/Music';
 import Settings from './components/settings/Settings';
-import { UsersContainer } from './components/Users/UsersContainer';
 import { LogInPage } from './login/LogInPage';
-import HeaderContainer from './components/header/headerContainer';
+import Header from './components/header/headerContainer';
+import { Users } from './components/Users/Users';
 const App = (props) => {
   return (
     <div className="app-wrapper">
-      <HeaderContainer />
+      <Header />
       <Navbar />
       <div className='app-wrapper-content'>
         <Routes>
@@ -22,7 +22,7 @@ const App = (props) => {
           <Route path='/news' element={<News />} />
           <Route path='/music' element={<Music />} />
           <Route path='/settings' element={<Settings />} />
-          <Route path='/users' element={<UsersContainer />}></Route>
+          <Route path='/users' element={<Users />}></Route>
           <Route path='/login' element={<LogInPage />}></Route>
         </Routes>
       </div>

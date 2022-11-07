@@ -1,28 +1,31 @@
 import styles from './Users.module.css'
 import { useEffect, } from 'react'
 import { NavLink } from 'react-router-dom'
-import { FollowUser } from '../../api/useApi'
-import { GetUsersThunkCreator, OnpageChanged } from '../../redux/users-reducer'
-import { useDispatch } from 'react-redux'
+import { GetUsersThunkCreator, OnpageChanged, Follow, UnFollow } from '../../redux/users-reducer'
+import { useDispatch, useSelector } from 'react-redux'
+import loader from '../../photo/loader.gif'
 const Users = (props) => {
     // debugger
+    const st = useSelector(state => state.users)
     const dispatch = useDispatch()
     const classNames = require('classnames')
-    const pagesCount = Math.ceil(props.st.totalCount / props.st.pageSize) //вычисляем количество страниц, и округляем
+    const pagesCount = Math.ceil(st.totalCount / st.pageSize) //вычисляем количество страниц, и округляем
+    const userPhotoUrl = 'https://thumbs.dreamstime.com/b/%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9-%D0%BC-%D0%B0-%D0%B5%D0%BD%D0%B5%D1%86-39968623.jpg'
     useEffect(() => {
-        dispatch(GetUsersThunkCreator(props.st.currentPage, props.st.pageSize))
+        dispatch(GetUsersThunkCreator(st.currentPage, st.pageSize))
     }, [null]) //рендеринг юзеров
+
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
 
 
     return <div>
-
+        {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
         <div className={styles.page_wrap}> <button className={styles.pageSwitch__btn}>{'<<'}</button> <div className={styles.page}> {pages.map(item => {
 
             return <span
                 onClick={() => dispatch(OnpageChanged(item))}
-                className={props.st.currentPage === item ? classNames(styles.pageItem, styles.selectedItem)
+                className={st.currentPage === item ? classNames(styles.pageItem, styles.selectedItem)
                     : classNames(styles.pageItem)}>
                 {item}
             </span>
@@ -30,20 +33,20 @@ const Users = (props) => {
 
         </div><button className={styles.pageSwitch__btn}>{'>>'}</button> </div>
 
-        {props.st.users.map(u => <div className={styles.user}>
+        {st.users.map(u => <div className={styles.user}>
             <span>
 
                 <NavLink to={`../profile/${u.id}`}>
                     <div className={styles.photo_container}><img
                         className={styles.photo}
-                        src={u.photos.small != null ? u.photos.small : props.userPhotoUrl} />
+                        src={u.photos.small != null ? u.photos.small : userPhotoUrl} />
                     </div>
                 </NavLink>
 
                 <div className={styles.follow_btn}>
                     {u.followed ?
-                        <button disabled={props.st.toggleFollowing.some(id => id === u.id)} onClick={() => { props.UnFollow(u.id) }}>unfollow</button>
-                        : <button disabled={props.st.toggleFollowing.some(id => id === u.id)} onClick={() => { props.Follow(u.id) }}>follow</button>}
+                        <button disabled={st.toggleFollowing.some(id => id === u.id)} onClick={() => { dispatch(UnFollow(u.id)) }}>unfollow</button>
+                        : <button disabled={st.toggleFollowing.some(id => id === u.id)} onClick={() => { dispatch(Follow(u.id)) }}>follow</button>}
 
                 </div>
 

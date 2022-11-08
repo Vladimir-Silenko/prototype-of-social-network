@@ -4,14 +4,15 @@ let initialstate = {
     userId: null,
     email: null,
     login: null,
-    isFetching: false,
+    isAuth: false,
 }
 const authReducer = (state = initialstate, action) => {
     switch (action.type) {
         case SET_USER_DATA: {
             return {
                 ...state,
-                ...action.data
+                ...action.data,
+                isAuth: true
             }
 
         }
@@ -23,10 +24,11 @@ const authReducer = (state = initialstate, action) => {
 export let authReducerAC = (userId, email, login,) => ({ type: SET_USER_DATA, data: { userId, email, login, }, })
 export const AuthData = () => {
     return (dispatch) => {
-        AuthMe().then(data => {
-            let { id, email, login } = data.data
-            dispatch(authReducerAC(id, email, login))
-            console.log(data.data)
+        AuthMe().then(response => {
+            if (response.data.resultCode === 0) {
+                let { id, email, login } = response.data.data
+                dispatch(authReducerAC(id, email, login))
+            }
         })
     }
 }

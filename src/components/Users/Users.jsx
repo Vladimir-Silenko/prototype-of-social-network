@@ -4,9 +4,11 @@ import { NavLink } from 'react-router-dom'
 import { GetUsersThunkCreator, OnpageChanged, Follow, UnFollow } from '../../redux/users-reducer'
 import { useDispatch, useSelector } from 'react-redux'
 import loader from '../../photo/loader.gif'
+import { Navigate } from 'react-router-dom'
 const Users = (props) => {
     // debugger
     const st = useSelector(state => state.users)
+    const auth = useSelector(state => state.auth.isAuth)
     const dispatch = useDispatch()
     const classNames = require('classnames')
     const pagesCount = Math.ceil(st.totalCount / st.pageSize) //вычисляем количество страниц, и округляем
@@ -17,8 +19,8 @@ const Users = (props) => {
 
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
-
-
+    console.log(auth)
+    // if (auth === false) return <Navigate to='../login' />
     return <div>
         {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
         <div className={styles.page_wrap}> <button className={styles.pageSwitch__btn}>{'<<'}</button> <div className={styles.page}> {pages.map(item => {
@@ -62,4 +64,4 @@ const Users = (props) => {
         </div>)}
     </div>
 }
-export { Users }
+export { Users, }

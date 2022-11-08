@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import { useParams } from "react-router-dom";
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
@@ -22,7 +22,10 @@ const GetAllUsers = (current, pageSize) => {
     return instance.get(`users?page=${current}&count=${pageSize}`).then(response => response.data)
 }
 const AuthMe = () => {
-    return (instance.get('auth/me')).then(response => response.data)
+    return (instance.get('auth/me')).then(response => response)
+}
+const GetProfile = (params) => {
+    return instance.get(`profile/${params.userId}`).then(response => response.data)
 }
 
-export { ChangeUserPage, FollowUser, UnFollowUser, GetAllUsers, AuthMe }
+export { ChangeUserPage, FollowUser, UnFollowUser, GetAllUsers, AuthMe, GetProfile }

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { GetUsersThunkCreator, OnpageChanged, Follow, UnFollow } from '../../redux/users-reducer'
 import { useDispatch, useSelector } from 'react-redux'
 import loader from '../../photo/loader.gif'
-import { Navigate } from 'react-router-dom'
+import { useRedirect } from '../../hooks/useRedirect'
 const Users = (props) => {
     // debugger
     const st = useSelector(state => state.users)
@@ -13,14 +13,14 @@ const Users = (props) => {
     const classNames = require('classnames')
     const pagesCount = Math.ceil(st.totalCount / st.pageSize) //вычисляем количество страниц, и округляем
     const userPhotoUrl = 'https://thumbs.dreamstime.com/b/%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9-%D0%BC-%D0%B0-%D0%B5%D0%BD%D0%B5%D1%86-39968623.jpg'
+    const redirect = useRedirect()
     useEffect(() => {
         dispatch(GetUsersThunkCreator(st.currentPage, st.pageSize))
     }, [null]) //рендеринг юзеров
 
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
-    console.log(auth)
-    // if (auth === false) return <Navigate to='../login' />
+    // if (!auth) return redirect
     return <div>
         {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
         <div className={styles.page_wrap}> <button className={styles.pageSwitch__btn}>{'<<'}</button> <div className={styles.page}> {pages.map(item => {

@@ -1,3 +1,6 @@
+
 import { Navigate } from "react-router-dom"
 
-export const useRedirect = () => { return <Navigate to="../login" /> }
+export const useRedirect = (auth) => {
+    return <Navigate to="../login" />
+}

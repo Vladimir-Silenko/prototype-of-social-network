@@ -20,7 +20,7 @@ const Users = (props) => {
 
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
-    // if (!auth) return redirect
+    if (!auth) return redirect
     return <div>
         {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
         <div className={styles.page_wrap}> <button className={styles.pageSwitch__btn}>{'<<'}</button> <div className={styles.page}> {pages.map(item => {

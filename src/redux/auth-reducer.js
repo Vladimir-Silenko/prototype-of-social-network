@@ -27,6 +27,7 @@ export const AuthData = () => {
         AuthMe().then(response => {
             if (response.data.resultCode === 0) {
                 let { id, email, login } = response.data.data
+                // console.log(response.data)
                 dispatch(authReducerAC(id, email, login))
             }
         })

@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+
 import styles from './ProfileInfo.module.css'
 import loader from '../../../photo/loader.gif'
 import ProfileStatus from './profileStatus'

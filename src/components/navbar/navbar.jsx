@@ -1,10 +1,16 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
+import { SetCurrentUser } from '../../redux/navbar-reducer'
 import Friendlist from './friendlist/Friendlist'
 import classes from './navbar.module.css'
 let Navbar = (props) => {
+    const currentUser = useSelector(state => state.navbar.usersProfile)
+    const dispatch = useDispatch()
+    useEffect(() => { dispatch(SetCurrentUser()) }, [])
     const params = useParams()
     let userId = params.userId
-    if (!userId) { userId = '2' }
+    if (!userId) { userId = currentUser }
     let classNames = require('classnames')
     let classSwitch = navData => navData.isActive ? classNames(classes.item, classes.activeLink) : classes.item
     return <div>

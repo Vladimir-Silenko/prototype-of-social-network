@@ -1,4 +1,4 @@
-import { AuthMe, GetProfile } from "../api/useApi"
+import { authApi } from "../api/useApi"
 
 const SET_CURRENT_USER = 'SET_CURRENT_USER'
 let initialstate = {
@@ -7,7 +7,7 @@ let initialstate = {
         { name: 'Karina', ava: 'https://funart.pro/uploads/posts/2021-10/1633940898_1-funart-pro-p-zlaya-taksa-zhivotnie-krasivo-foto-2.jpg', id: 2 },
         { name: 'Mikel', ava: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsGFzx_58JF2vM5_r82NKOuNxOcOGzhRGRuA&usqp=CAU', id: 3 },
     ],
-    usersProfile: 24
+    usersProfile: 2
 }
 const NavbarReducer = (state = initialstate, action) => {
     switch (action.type) {
@@ -25,7 +25,7 @@ const NavbarReducer = (state = initialstate, action) => {
 const currentUserAC = (userId) => ({ type: SET_CURRENT_USER, userId: userId })
 export const SetCurrentUser = () => {
     return (dispatch) => {
-        AuthMe().then(response => {
+        authApi.AuthMe().then(response => {
             dispatch(currentUserAC(response.data.data.id))
         })
     }

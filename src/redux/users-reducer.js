@@ -1,4 +1,4 @@
-import { GetAllUsers, ChangeUserPage, FollowUser, UnFollowUser } from "../api/useApi"
+import { UserApi } from "../api/useApi"
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -82,7 +82,7 @@ export let toggleIsFollowingAC = (isFetching, userId) => ({ type: TOGGLE_IS_FOLL
 export const GetUsersThunkCreator = (currentPage, pageSize) => {
     return (dispatch) => {
         dispatch(toggleIsFetchingAC(true))
-        GetAllUsers(currentPage, pageSize).then(data => {
+        UserApi.GetAllUsers(currentPage, pageSize).then(data => {
             dispatch(toggleIsFetchingAC(false));
             dispatch(setUsersAC(data.items))
             dispatch(setTotalCountAC(data.totalCount))
@@ -95,7 +95,7 @@ export let OnpageChanged = (pageNumber) => {
     return (dispatch) => {
         dispatch(setCurrentPageAC(pageNumber))
         dispatch(toggleIsFetchingAC(true));
-        ChangeUserPage(pageNumber,
+        UserApi.ChangeUserPage(pageNumber,
             initialstate.pageSize).then(data => {
                 dispatch(toggleIsFetchingAC(false));
                 dispatch(setUsersAC(data.items));
@@ -105,7 +105,7 @@ export let OnpageChanged = (pageNumber) => {
 export const Follow = (userId) => {
     return (dispatch) => {
         dispatch(toggleIsFollowingAC(true, userId))
-        FollowUser(userId).then(data => {
+        UserApi.FollowUser(userId).then(data => {
             if (data.resultCode == 0) {
                 dispatch(followAC(userId))
                 dispatch(toggleIsFollowingAC(false, userId))
@@ -116,7 +116,7 @@ export const Follow = (userId) => {
 export const UnFollow = (userId) => {
     return (dispatch) => {
         dispatch(toggleIsFollowingAC(true, userId))
-        UnFollowUser(userId).then(data => {
+        UserApi.UnFollowUser(userId).then(data => {
             if (data.resultCode == 0) {
                 dispatch(unFollowAC(userId))
                 dispatch(toggleIsFollowingAC(false, userId))

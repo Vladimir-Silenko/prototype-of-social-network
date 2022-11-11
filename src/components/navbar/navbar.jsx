@@ -5,8 +5,8 @@ import { SetCurrentUser } from '../../redux/navbar-reducer'
 import Friendlist from './friendlist/Friendlist'
 import classes from './navbar.module.css'
 let Navbar = (props) => {
-    const currentUser = useSelector(state => state.navbar.usersProfile)
     const dispatch = useDispatch()
+    const currentUser = useSelector(state => state.navbar.usersProfile)
     useEffect(() => { dispatch(SetCurrentUser()) }, [])
     const params = useParams()
     let userId = params.userId

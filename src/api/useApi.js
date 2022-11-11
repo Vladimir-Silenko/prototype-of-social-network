@@ -5,27 +5,42 @@ const instance = axios.create({
     withCredentials: true,
     "API-KEY": '9a9f90f9-3ad2-4322-91d2-0bb20b5233fa'
 })
-const ChangeUserPage = (pageNumber, pageSize) => {
-    return instance.get(`users?page=${pageNumber}&count=${pageSize}`)
-        .then(response => response.data)
+const UserApi = {
+    ChangeUserPage: (pageNumber, pageSize) => {
+        return instance.get(`users?page=${pageNumber}&count=${pageSize}`)
+            .then(response => response.data)
+    },
+
+    FollowUser: (userId) => {
+        return instance.post(`follow/${userId}`).then(response => response.data)
+    },
+
+    UnFollowUser: (userId) => {
+        return instance.delete(`follow/${userId}`).then(response => response.data)
+    },
+
+    GetAllUsers: (current, pageSize) => {
+        return instance.get(`users?page=${current}&count=${pageSize}`).then(response => response.data)
+    },
+}
+const profileApi = {
+    GetProfile(params) {
+        return instance.get(`profile/${params.userId}`).then(response => response.data)
+    },
+    getStatus(params) {
+        return instance.get(`profile/status/${params.userId}`).then(response => response)
+    },
+    updateStatus(status) {
+        return instance.put(`profile/status`, { status }).then(response => response)
+    },
 }
 
-const FollowUser = (userId) => {
-    return instance.post(`follow/${userId}`).then(response => response.data)
+const authApi = {
+    AuthMe() {
+        return (instance.get('auth/me')).then(response => response)
+    },
 }
 
-const UnFollowUser = (userId) => {
-    return instance.delete(`follow/${userId}`).then(response => response.data)
-}
 
-const GetAllUsers = (current, pageSize) => {
-    return instance.get(`users?page=${current}&count=${pageSize}`).then(response => response.data)
-}
-const AuthMe = () => {
-    return (instance.get('auth/me')).then(response => response)
-}
-const GetProfile = (params) => {
-    return instance.get(`profile/${params.userId}`).then(response => response.data)
-}
 
-export { ChangeUserPage, FollowUser, UnFollowUser, GetAllUsers, AuthMe, GetProfile }
+export { profileApi, UserApi, authApi }

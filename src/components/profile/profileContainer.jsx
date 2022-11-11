@@ -22,7 +22,11 @@ let ProfileContainer = (props) => {
     if (!auth) return redirect
 
     return <div >
-
+        {/* <>
+            <div className={styles.banner}>
+                <img src='https://photographylife.com/wp-content/uploads/2020/03/Ultra-Wide-Angle-Panoramas-1.jpg' />
+            </div>
+        </> */}
         <ProfileInfo state={st.profile} />
         <SendPostContainer state={st} />
         <MyPostsContainer />

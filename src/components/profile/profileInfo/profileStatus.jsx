@@ -14,21 +14,19 @@ const ProfileStatus = (props) => {
     const [editMode, setState] = useState(false)
     const onStatusChange = (e) => {
         setStatusText(e.currentTarget.value)
-
     }
-
     return <div>
         {editMode &&
             <div>
                 <input value={statusText} onChange={onStatusChange} style={{ outline: "none" }} autoFocus={true} onBlur={() => {
                     setState(false)
                     dispatch(UpdateUserStatus(statusText))
-                    console.log(status)
+                    dispatch(GetUserStatus(params))
                 }} type="text" name="" id="" />
             </div>}
         {!editMode &&
             <div>
-                <span style={{ fontWeight: "bold" }} onDoubleClick={() => setState(true)} >{statusText}</span>
+                <span style={{ fontWeight: "bold" }} onDoubleClick={() => setState(true)} >{status || 'no status'}</span>
             </div>}
     </div>
 }

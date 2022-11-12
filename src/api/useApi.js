@@ -37,8 +37,14 @@ const profileApi = {
 
 const authApi = {
     AuthMe() {
-        return (instance.get('auth/me')).then(response => response)
+        return instance.get('auth/me').then(response => response)
     },
+    LoginMe(email, password, rememberMe = false) {
+        return instance.post('auth/login', { email, password, rememberMe })
+    },
+    LogoutMe() {
+        return instance.delete('auth/login')
+    }
 }
 
 

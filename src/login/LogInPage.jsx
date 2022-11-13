@@ -3,6 +3,7 @@ import { reduxForm, Field } from "redux-form"
 import { useDispatch } from 'react-redux'
 import { LoginData } from '../redux/auth-reducer'
 
+
 const LoginForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
@@ -24,12 +25,12 @@ const LoginReduxForm = reduxForm({ form: 'login' })(LoginForm)
 
 const LogInPage = (props) => {
     const dispatch = useDispatch()
-    const onSubmit = (formData) => {
+    const Submit = (formData) => {
         dispatch(LoginData(formData.Email, formData.Password, formData.RememberMe))
     }
     return <div>
         <h1>LogIn</h1>
-        <LoginReduxForm onSubmit={onSubmit} />
+        <LoginReduxForm onSubmit={Submit} />
     </div>
 }
 export { LogInPage }

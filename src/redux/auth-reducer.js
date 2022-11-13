@@ -31,6 +31,7 @@ export const AuthData = () => {
             if (response.data.resultCode === 0) {
                 let { id, email, login } = response.data.data
                 dispatch(authReducerAC(id, email, login))
+                console.log(response.data.data)
             }
         })
     }

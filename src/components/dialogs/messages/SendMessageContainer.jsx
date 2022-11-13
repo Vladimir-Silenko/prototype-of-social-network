@@ -6,7 +6,7 @@ const SendMessageContainer = (props) => {
     let messageText = useSelector(state => state.messages.newMessageText)
     let dispatch = useDispatch()
     const Update = (text) => dispatch(UpdateMessageTextActionCreator(text))
-    const Send = () => dispatch(sendMessageActionCreator())
+    const Send = (newMessageText) => dispatch(sendMessageActionCreator(newMessageText))
     return < SendMessage
         Update={Update}
         Send={Send}

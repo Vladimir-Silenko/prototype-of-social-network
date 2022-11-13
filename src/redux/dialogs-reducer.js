@@ -1,5 +1,4 @@
 const AddMessage = 'AddMessage'
-const UpdateMessageText = 'UpdateMessageText'
 let initialstate = {
     dialogsData: [
         { name: 'Alisa', surname: 'Silenko', ava: 'https://krot.info/uploads/posts/2021-03/1615285482_44-p-kotenok-gav-art-kartinki-46.jpg', age: 4, id: 1, },
@@ -36,20 +35,9 @@ const DialogsReducer = (state = initialstate, action) => {
             }
 
         }
-        case UpdateMessageText: {
-            return {
-                ...state,
-                newMessageText: action.newText
-            }
-
-        }
         default:
             return state
     };
 }
 export let sendMessageActionCreator = (text) => ({ type: AddMessage, text });
-export let UpdateMessageTextActionCreator = (text) => ({
-    type: UpdateMessageText,
-    newText: text
-});
 export default DialogsReducer

@@ -1,16 +1,10 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { sendMessageActionCreator, UpdateMessageTextActionCreator } from '../../../redux/dialogs-reducer'
+import { useDispatch } from 'react-redux'
+import { sendMessageActionCreator } from '../../../redux/dialogs-reducer'
 import SendMessage from './SendMessage'
 const SendMessageContainer = (props) => {
-    let messageText = useSelector(state => state.messages.newMessageText)
     let dispatch = useDispatch()
-    const Update = (text) => dispatch(UpdateMessageTextActionCreator(text))
     const Send = (newMessageText) => dispatch(sendMessageActionCreator(newMessageText))
-    return < SendMessage
-        Update={Update}
-        Send={Send}
-        newMessageText={messageText}
-    />
+    return < SendMessage Send={Send} />
 }
 export default SendMessageContainer

@@ -16,7 +16,7 @@ let Navbar = (props) => {
     return <div>
         <nav className={classes.nav}>
 
-            <div ><NavLink to={`profile/` + userId} className={classSwitch} >Profile</NavLink></div>
+            <div ><NavLink to={`profile/${userId}`} className={classSwitch} >Profile</NavLink></div>
             <div ><NavLink to="dialogs" className={classSwitch} >Messages</NavLink></div>
             <div ><NavLink to="news" className={classSwitch} >News</NavLink></div>
             <div ><NavLink to="music" className={classSwitch} >Music</NavLink></div>

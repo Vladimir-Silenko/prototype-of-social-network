@@ -4,6 +4,7 @@ import classes from './SendPost.module.css';
 let SendPost = (props) => {
     const Send = (values) => {
         props.Send(values.newPostText)
+        values.newPostText = ''
     }
     return <div className={classes.sendPost}>
         <h3>My Posts</h3>

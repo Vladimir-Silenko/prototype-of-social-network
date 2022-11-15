@@ -8,7 +8,7 @@ const SendPostContainer = (props) => {
     const newPostText = useSelector(state => state.profile.newPostText)
     const Send = (text) => dispatch(addPostActionCreator(text))
     return (
-        (<SendPost Send={Send} />)
+        <SendPost Send={Send} />
     )
 }
 export default SendPostContainer;

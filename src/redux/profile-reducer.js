@@ -1,7 +1,6 @@
 import { profileApi } from "../api/useApi";
 
 const AddPost = 'AddPost';
-// const UpdatePostText = 'UpdatePostText';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 let initialState = {

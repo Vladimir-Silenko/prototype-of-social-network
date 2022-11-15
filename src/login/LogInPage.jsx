@@ -1,10 +1,13 @@
 
 import { reduxForm, Field } from "redux-form"
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { LoginData } from '../redux/auth-reducer'
 import styled from 'styled-components'
 import { Input } from "../components/reusable/input"
 import { required } from '../utils/validators'
+import { Navigate, useParams } from "react-router-dom"
+import { useEffect } from "react"
+import { SetCurrentUser } from "../redux/navbar-reducer"
 const FormBlock = styled.div`
 display:flex;
 flex-direction:column;
@@ -13,7 +16,14 @@ width:100%;
 `
 
 const LoginForm = (props) => {
-
+    const dispatch = useDispatch()
+    const currentUser = useSelector(state => state.navbar.usersProfile)
+    const auth = useSelector(state => state.auth.isAuth)
+    const params = useParams()
+    let userId = params.userId
+    if (!userId) { userId = currentUser }
+    useEffect(() => { dispatch(SetCurrentUser()) }, [])
+    if (auth) return <Navigate to={`../profile/${userId}`} />
     return (
         <FormBlock>
             <form onSubmit={props.handleSubmit}>

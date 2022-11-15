@@ -1,5 +1,6 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form'
+import { Textarea } from '../../reusable/Textarea'
 import styles from './SendMessage.module.css'
 
 const SendMessage = (props) => {
@@ -11,7 +12,7 @@ const SendMessage = (props) => {
 const AddMessageForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <Field
-            component='textarea'
+            component={Textarea}
             placeholder='Type...'
             name="newMessageText" />
         <button >Send</button>

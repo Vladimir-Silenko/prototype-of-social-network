@@ -1,16 +1,18 @@
-import styles from './LogInPage.module.css'
+
 import { reduxForm, Field } from "redux-form"
 import { useDispatch } from 'react-redux'
 import { LoginData } from '../redux/auth-reducer'
+import styled from 'styled-components'
+import { Input } from "../components/reusable/input"
 
 
 const LoginForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <div>
-            <Field placeholder='Email' name={'Email'} component={'input'} />
+            <Field placeholder='Email' name={'Email'} component={Input} />
         </div>
         <div>
-            <Field placeholder='Password' name={'Password'} component={'input'} type={'password'} />
+            <Field placeholder='Password' name={'Password'} component={Input} type={'password'} />
         </div>
         <div>
             <Field component={'input'} name={'RememberMe'} type={'checkbox'} /> Remember Me

@@ -7,13 +7,12 @@ const Txt = styled.textarea`
     border-radius: 5px;
     outline: none;
     border:1px solid darkblue;
-    &:focus{
-    border:${props => props.value ? '1px solid darkblue' : '1px solid red'};}
 `
+
 
 export const Textarea = ({ input, meta, ...props }) => {
     // debugger
     return <div>
-        <Txt {...props} {...input} />
+        <Txt {...props} {...input} {...meta} />
     </div>
 }

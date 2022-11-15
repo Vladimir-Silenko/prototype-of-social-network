@@ -1,6 +1,8 @@
 import React from 'react'
 import { Field, reduxForm } from 'redux-form';
 import classes from './SendPost.module.css';
+import { required, MaxLength, } from '../../../utils/validators'
+import { Textarea } from '../../reusable/Textarea';
 let SendPost = (props) => {
     const Send = (values) => {
         props.Send(values.newPostText)
@@ -12,10 +14,12 @@ let SendPost = (props) => {
     </div>
 
 }
+const MaxLength10 = MaxLength(10)
 const AddPostForm = (props) => {
     return <form onSubmit={props.handleSubmit}>
         <Field
-            component="textarea"
+            validate={[required, MaxLength10]}
+            component={Textarea}
             name="newPostText"
             placeholder="type..." />
         <button>Send Post</button>

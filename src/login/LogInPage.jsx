@@ -17,12 +17,13 @@ width:100%;
 
 const LoginForm = (props) => {
     const dispatch = useDispatch()
-    const currentUser = useSelector(state => state.navbar.usersProfile)
     const auth = useSelector(state => state.auth.isAuth)
     const params = useParams()
     let userId = params.userId
-    if (!userId) { userId = currentUser }
     useEffect(() => { dispatch(SetCurrentUser()) }, [])
+    const currentUser = useSelector(state => state.navbar.usersProfile)
+    if (!userId) { userId = currentUser }
+
     if (auth) return <Navigate to={`../profile/${userId}`} />
     return (
         <FormBlock>

@@ -15,7 +15,7 @@ const authReducer = (state = initialstate, action) => {
             return {
                 ...state,
                 ...action.data,
-                isAuth: true
+                // isAuth: true
             }
 
         }
@@ -30,7 +30,7 @@ export const AuthData = () => {
         authApi.AuthMe().then(response => {
             if (response.data.resultCode === 0) {
                 let { id, email, login } = response.data.data
-                dispatch(authReducerAC(id, email, login))
+                dispatch(authReducerAC(id, email, login, true))
                 console.log(response.data.data)
             }
         })

@@ -8,8 +8,8 @@ let initialState = {
     profile: null,
     postData: [
         { id: 1, post: 'Hey! how are you?', likes: 24, },
-        { id: 2, post: 'I am learning react.js', likes: 20, },
-        { id: 3, post: 'miss my girlfriend so much!', likes: 15, },
+        { id: 2, post: 'Fine', likes: 20, },
+        { id: 3, post: 'When  will you  come back?', likes: 15, },
     ],
     status: ''
 };
@@ -45,10 +45,6 @@ const ProfileReducer = (state = initialState, action) => {
 }
 
 export let addPostActionCreator = (text) => ({ type: AddPost, text });
-// export let UpdatePostTextActionCreator = (text) => ({
-//     type: UpdatePostText,
-//     newText: text
-// });
 export let setUserProfileAC = (profile) => ({ type: SET_USER_PROFILE, profile })
 export let setStatusAC = (status) => ({ type: SET_STATUS, status: status })
 

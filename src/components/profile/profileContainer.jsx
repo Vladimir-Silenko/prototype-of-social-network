@@ -1,4 +1,4 @@
-import styles from './profile.module.css'
+
 import ProfileInfo from './profileInfo/ProfileInfo';
 import SendPostContainer from './sendPost/SendPost container';
 import MyPostsContainer from './myPosts/MyPosts-container';
@@ -21,13 +21,7 @@ let ProfileContainer = (props) => {
         setAuth(auth)
     }, [null])
 
-    if (isAuth === false) return redirect
-    // if (isAuth === false) return redirect
-
-
-    // setTimeout(redirecting, 1000)
-
-
+    if (!auth) return redirect
 
     return <div >
         <ProfileInfo state={st.profile} />

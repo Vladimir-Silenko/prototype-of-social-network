@@ -16,14 +16,11 @@ width:100%;
 `
 
 const LoginForm = (props) => {
+    // debugger
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth.isAuth)
-    const params = useParams()
-    let userId = params.userId
+    let userId = useSelector(state => state.auth.userId)
     useEffect(() => { dispatch(SetCurrentUser()) }, [])
-    const currentUser = useSelector(state => state.navbar.usersProfile)
-    if (!userId) { userId = currentUser }
-
     if (auth) return <Navigate to={`../profile/${userId}`} />
     return (
         <FormBlock>
@@ -34,6 +31,7 @@ const LoginForm = (props) => {
                 <div>
                     <Field validate={required} placeholder='Password' name={'Password'} component={Input} type={'password'} />
                 </div>
+                <div style={{ color: 'red', marginLeft: '15px' }}>{props.error}</div>
                 <div>
                     <Field component={'input'} name={'RememberMe'} type={'checkbox'} /> Remember Me
                 </div>

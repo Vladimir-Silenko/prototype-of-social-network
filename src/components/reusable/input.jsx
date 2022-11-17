@@ -10,5 +10,6 @@ export const Input = ({ meta, input, ...props }) => {
     // debugger
     return <div>
         <Inp {...props} {...input} {...meta} />
+        {/* {meta.touched && meta.error && <span>{meta.error}</span>} */}
     </div>
 }

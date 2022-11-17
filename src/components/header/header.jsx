@@ -11,14 +11,13 @@ const Header = (props) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(AuthData())
-        console.log(auth)
-    }, [])
+    }, [auth])
     return <header className={styles.header}>
         <h1 className={styles.MySocial}>MySocial</h1>
         <div>
             {
-                !auth ? <NavLink className={styles.login} to="./login">login</NavLink>
-                    : <Btn onClick={() => {
+                !auth ? <NavLink className={styles.login} to="./login"></NavLink>
+                    : <Btn style={{ margin: '13px 0 0 930px' }} onClick={() => {
                         dispatch(Logout())
                     }} >logout</Btn>
             }

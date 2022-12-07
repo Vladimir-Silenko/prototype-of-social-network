@@ -5,7 +5,6 @@ import SendPost from './SendPost';
 const SendPostContainer = (props) => {
 
     const dispatch = useDispatch()
-    const newPostText = useSelector(state => state.profile.newPostText)
     const Send = (text) => dispatch(addPostActionCreator(text))
     return (
         <SendPost Send={Send} />

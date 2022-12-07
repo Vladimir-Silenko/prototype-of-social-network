@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LoginData } from '../redux/auth-reducer'
 import styled from 'styled-components'
 import { Input } from "../components/reusable/input"
+import { Btn } from "../components/reusable/button"
 import { required } from '../utils/validators'
 import { Navigate, useParams } from "react-router-dom"
 import { useEffect } from "react"
@@ -14,7 +15,11 @@ flex-direction:column;
 align-items:center;
 width:100%;
 `
+const ErrorBlock = styled.div`
+background:#E60C0C;
+color:#fff;
 
+`
 const LoginForm = (props) => {
     // debugger
     const dispatch = useDispatch()
@@ -31,12 +36,12 @@ const LoginForm = (props) => {
                 <div>
                     <Field validate={required} placeholder='Password' name={'Password'} component={Input} type={'password'} />
                 </div>
-                <div style={{ color: 'red', marginLeft: '15px' }}>{props.error}</div>
+                <ErrorBlock>{props.error}</ErrorBlock>
                 <div>
                     <Field component={'input'} name={'RememberMe'} type={'checkbox'} /> Remember Me
                 </div>
                 <div>
-                    <button>Log in</button>
+                    <Btn>Log in</Btn>
                 </div>
             </form>
         </FormBlock>

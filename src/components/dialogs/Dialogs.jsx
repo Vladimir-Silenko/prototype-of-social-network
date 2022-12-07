@@ -12,7 +12,7 @@ const Dialogs = (props) => {
     let msgs = useSelector(state => state.messages.messageData)
     let dialogs = dlgs.map(item => <DialogItem ava={item.ava} name={item.name} surname={item.surname} key={item.id} />);
     let messages = msgs.map(item => <Messages key={item.id} content={item.message} you={item.you} />)
-    // if (!auth) return redirect
+    if (!auth) return redirect
     return (
         <div className={styles.container}>
             <div className={styles.dialogs}>

@@ -14,7 +14,10 @@ border-top:1px solid lightgrey;
 border-bottom-left-radius:20px;
 `
 const SendMessage = (props) => {
-    const Send = (values) => props.Send(values.newMessageText)
+    const Send = (values) => {
+        props.Send(values.newMessageText)
+        values.newMessageText = ''
+    }
     return <SendMessageSection>
         <AddMessageFormRedux onSubmit={Send} />
     </SendMessageSection>

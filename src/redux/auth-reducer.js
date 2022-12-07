@@ -2,6 +2,7 @@ import { stopSubmit } from "redux-form"
 import { authApi } from "../api/useApi"
 const SET_USER_DATA = 'SET_USER_DATA'
 const LOGIN_USER = "LOGIN_USER"
+
 let initialstate = {
     userId: null,
     email: null,
@@ -25,17 +26,16 @@ const authReducer = (state = initialstate, action) => {
     }
 }
 export let authReducerAC = (userId, email, login, isAuth) => ({ type: SET_USER_DATA, data: { userId, email, login, isAuth }, })
-export const AuthData = () => {
-    return (dispatch) => {
-        authApi.AuthMe().then(response => {
+export const AuthData = () => (dispatch) => {
+    return authApi.AuthMe()
+        .then(response => {
             if (response.data.resultCode === 0) {
                 let { id, email, login } = response.data.data
                 dispatch(authReducerAC(id, email, login, true))
-                console.log(response.data.data)
             }
         })
-    }
 }
+
 export const LoginData = (email, password, rememberMe) => {
     return (dispatch) => {
         authApi.LoginMe(email, password, rememberMe)
@@ -44,7 +44,9 @@ export const LoginData = (email, password, rememberMe) => {
                     dispatch(AuthData())
                 }
                 else {
-                    dispatch(stopSubmit('login', { _error: 'Something wrong' }))
+                    let message = response.data.messages.length > 0 ?
+                        response.data.messages[0] : "Something wrong'"
+                    dispatch(stopSubmit('login', { _error: message }))
                 }
             })
     }

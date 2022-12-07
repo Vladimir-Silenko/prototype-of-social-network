@@ -7,23 +7,26 @@ import { useDispatch, useSelector, } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useRedirect } from '../../hooks/useRedirect';
+import loader from '../../photo/loader.gif'
 
 
 let ProfileContainer = (props) => {
     const st = useSelector(state => state.profile)
     const redirect = useRedirect()
     const auth = useSelector(state => state.auth.isAuth)
+    const [isAuth, setAuth] = useState(auth)
     const dispatch = useDispatch()
     const params = useParams()
-    const [isAuth, setAuth] = useState(auth)
     useEffect(() => {
         dispatch(GetUserProfile(params))
         setAuth(auth)
     }, [null])
 
-    if (!auth) return redirect
+    if (!isAuth) return redirect
+
 
     return <div >
+
         <ProfileInfo state={st.profile} />
         <SendPostContainer state={st} />
         <MyPostsContainer />

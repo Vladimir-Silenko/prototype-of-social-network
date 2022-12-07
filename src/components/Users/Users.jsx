@@ -5,10 +5,10 @@ import { GetUsersThunkCreator, OnpageChanged, Follow, UnFollow } from '../../red
 import { useDispatch, useSelector } from 'react-redux'
 import loader from '../../photo/loader.gif'
 import { useRedirect } from '../../hooks/useRedirect'
+import { useAuth } from '../../redux/selectors'
 const Users = (props) => {
     // debugger
     const st = useSelector(state => state.users)
-    const auth = useSelector(state => state.auth.isAuth)
     const dispatch = useDispatch()
     const classNames = require('classnames')
     const pagesCount = Math.ceil(st.totalCount / st.pageSize) //вычисляем количество страниц, и округляем
@@ -20,7 +20,7 @@ const Users = (props) => {
 
     let pages = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
-    if (!auth) return redirect
+    if (!useAuth()) return redirect
     return <div>
         {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
         <div className={styles.page_wrap}> <button className={styles.pageSwitch__btn}>{'<<'}</button> <div className={styles.page}> {pages.map(item => {
@@ -37,7 +37,6 @@ const Users = (props) => {
 
         {st.users.map(u => <div className={styles.user}>
             <span>
-
                 <NavLink to={`../profile/${u.id}`}>
                     <div className={styles.photo_container}><img
                         className={styles.photo}

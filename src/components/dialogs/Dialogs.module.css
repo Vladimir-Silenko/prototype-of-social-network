@@ -14,10 +14,10 @@
 }
 
 .message_container {
-    height: 85vh;
+    height: 100vh;
     display: flex;
     flex-direction: column;
-    border: 1px solid rgb(212, 212, 212);
+    /* border: 1px solid rgb(212, 212, 212); */
     border-radius: 20px;
 }
 

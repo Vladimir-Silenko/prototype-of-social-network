@@ -1,5 +1,6 @@
-const AddMessage = 'AddMessage'
-let initialstate = {
+
+import DialogsReducer, { sendMessageActionCreator } from './dialogs-reducer';
+let state = {
     dialogsData: [
         { name: 'Alisa', surname: 'Silenko', ava: 'https://krot.info/uploads/posts/2021-03/1615285482_44-p-kotenok-gav-art-kartinki-46.jpg', age: 4, id: 1, },
         { name: 'Karina', surname: 'Silenko', ava: 'https://funart.pro/uploads/posts/2021-10/1633940898_1-funart-pro-p-zlaya-taksa-zhivotnie-krasivo-foto-2.jpg', age: 26, id: 2, },
@@ -52,24 +53,8 @@ let initialstate = {
             },
         ],
 }
-const DialogsReducer = (state = initialstate, action) => {
-    switch (action.type) {
-        case AddMessage: {
-            let newMessageText = action.text
-            return {
-                ...state,
-                messageData: [...state.messageData, {
-                    id: state.messageData.length + 1,
-                    you: 'you',
-                    message: newMessageText
-                }],
-                newMessageText: ''
-            }
-
-        }
-        default:
-            return state
-    };
-}
-export let sendMessageActionCreator = (text) => ({ type: AddMessage, text });
-export default DialogsReducer
+test('message should be added', () => {
+    let action = sendMessageActionCreator('new message')
+    let newState = DialogsReducer(state, action)
+    expect(newState.messageData.length).toBe(8)
+}) 

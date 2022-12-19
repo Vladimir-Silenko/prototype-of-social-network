@@ -13,7 +13,6 @@ import MyPosts from './myPosts/MyPosts';
 let ProfileContainer = (props) => {
     const st = useSelector(state => state.profile)
     const redirect = useRedirect()
-    // const auth = useSelector(state => state.auth.isAuth)
     const [isAuth, setAuth] = useState(useAuth())
     const dispatch = useDispatch()
     const params = useParams()

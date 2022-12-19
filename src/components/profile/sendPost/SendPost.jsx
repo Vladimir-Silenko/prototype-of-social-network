@@ -9,13 +9,13 @@ let SendPost = (props) => {
         values.newPostText = ''
     }
     return <div>
-        <h3>My Posts</h3>
+        <h3 style={{ marginLeft: '18px' }}>My Posts</h3>
         <AddPostFormRedux onSubmit={Send} />
     </div>
 
 }
 const AddPostForm = (props) => {
-    return <form onSubmit={props.handleSubmit}>
+    return <form style={{ marginLeft: '16px' }} onSubmit={props.handleSubmit}>
         <Field
             validate={required}
             component={Textarea}

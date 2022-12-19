@@ -1,6 +1,6 @@
 
 import styled from 'styled-components'
-
+import dayjs from 'dayjs'
 const Message = styled.div`
 display: flex;
 flex-direction: column;
@@ -16,6 +16,7 @@ const Messages = (props) => {
     return (
         <Message {...props}>
             <p>{props.content}</p>
+            <span>{dayjs(props.time).format('D.MMM HH:mm')}</span>
         </Message>
     )
 }

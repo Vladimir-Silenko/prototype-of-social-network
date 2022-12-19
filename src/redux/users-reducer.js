@@ -80,48 +80,48 @@ export let toggleIsFetchingAC = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isF
 export let toggleIsFollowingAC = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING, isFetching: isFetching, userId })
 
 export const GetUsersThunkCreator = (currentPage, pageSize) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(toggleIsFetchingAC(true))
-        UserApi.GetAllUsers(currentPage, pageSize).then(data => {
-            dispatch(toggleIsFetchingAC(false));
-            dispatch(setUsersAC(data.items))
-            dispatch(setTotalCountAC(data.totalCount))
-        })
+
+        let data = await UserApi.GetAllUsers(currentPage, pageSize)
+
+        dispatch(toggleIsFetchingAC(false));
+        dispatch(setUsersAC(data.items))
+        dispatch(setTotalCountAC(data.totalCount))
+
     }
 }
 
 export let OnpageChanged = (pageNumber) => {
 
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(setCurrentPageAC(pageNumber))
         dispatch(toggleIsFetchingAC(true));
-        UserApi.ChangeUserPage(pageNumber,
-            initialstate.pageSize).then(data => {
-                dispatch(toggleIsFetchingAC(false));
-                dispatch(setUsersAC(data.items));
-            })
+        let data = await UserApi.ChangeUserPage(pageNumber, initialstate.pageSize)
+        dispatch(toggleIsFetchingAC(false));
+        dispatch(setUsersAC(data.items));
+
     }
 }
+const FollowUnfollow = async (dispatch, userId, apiMethod, actionCreator) => {
+    dispatch(toggleIsFollowingAC(true, userId))
+    let data = await apiMethod(userId)
+
+    if (data.resultCode == 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(toggleIsFollowingAC(false, userId))
+
+}
+
 export const Follow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowingAC(true, userId))
-        UserApi.FollowUser(userId).then(data => {
-            if (data.resultCode == 0) {
-                dispatch(followAC(userId))
-                dispatch(toggleIsFollowingAC(false, userId))
-            }
-        })
+    return async (dispatch) => {
+        FollowUnfollow(dispatch, userId, UserApi.FollowUser.bind(UserApi), followAC)
     }
 }
 export const UnFollow = (userId) => {
-    return (dispatch) => {
-        dispatch(toggleIsFollowingAC(true, userId))
-        UserApi.UnFollowUser(userId).then(data => {
-            if (data.resultCode == 0) {
-                dispatch(unFollowAC(userId))
-                dispatch(toggleIsFollowingAC(false, userId))
-            }
-        })
+    return async (dispatch) => {
+        FollowUnfollow(dispatch, userId, UserApi.UnFollowUser.bind(UserApi), unFollowAC)
     }
 }
 

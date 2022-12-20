@@ -51,34 +51,6 @@
     margin: 0 3px;
 }
 
-.page {
-    /* display: inline; */
-    width: 80%;
-    text-align: center;
-    margin: 20px auto;
-    height: 20px;
-    overflow: hidden;
-}
-
-.page_wrap {
-    display: flex;
-    width: 40%;
-    margin: 0 auto;
-}
-
-.pageSwitch__btn {
-    height: 20px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    margin-top: 17px;
-    font-weight: bold;
-}
-
-.pageSwitch__btn:hover {
-    cursor: pointer;
-}
-
 .loader {
     width: 200px;
     margin: 10% 35%;

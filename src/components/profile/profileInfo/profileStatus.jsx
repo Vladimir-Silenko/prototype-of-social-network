@@ -4,13 +4,12 @@ import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
 import { GetUserStatus, UpdateUserStatus } from "../../../redux/profile-reducer"
 const ProfileStatus = (props) => {
-    const status = useSelector(state => state.profile.status)
     const params = useParams()
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(GetUserStatus(params))
     }, [])
-    const [statusText, setStatusText] = useState(status)
+    const [statusText, setStatusText] = useState(props.status)
     const [editMode, setState] = useState(false)
     const onStatusChange = (e) => {
         setStatusText(e.currentTarget.value)
@@ -26,7 +25,9 @@ const ProfileStatus = (props) => {
             </div>}
         {!editMode &&
             <div>
-                <span style={{ fontWeight: "bold" }} onDoubleClick={() => setState(true)} >{status || 'no status'}</span>
+                <span style={{ fontWeight: "bold" }} onDoubleClick={() => setState(true)} >
+                    {statusText || 'no status'}
+                </span>
             </div>}
     </div>
 }

@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import './App.css';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
 import Dialogs from './components/dialogs/Dialogs';
 import ProfileContainer from './components/profile/profileContainer';
@@ -10,20 +10,19 @@ import Settings from './components/settings/Settings';
 import { LogInPage } from './login/LogInPage';
 import Header from './components/header/header';
 import { Users } from './components/Users/Users';
-import { useDispatch, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import spinner from './photo/spinner.svg'
-import { useEffect, useState } from 'react';
+import { useEffect, } from 'react';
 import { initialiseAPP } from './redux/app-reducer';
+import store from './redux/redux-store';
 const App = (props) => {
   const init = useSelector(state => state.app.initialise)
-  const auth = useSelector(state => state.auth.isAuth)
   const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(initialiseAPP())
   }, [])
   if (init === false) {
-    console.log('works')
     return <img src={spinner} />
   }
 
@@ -46,4 +45,13 @@ const App = (props) => {
   );
 
 }
-export default App;
+const SamuraiJSApp = (props) => {
+  return (
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
+  )
+}
+export default SamuraiJSApp;

@@ -20,7 +20,7 @@ background:#E60C0C;
 color:#fff;
 
 `
-const LoginForm = (props) => {
+const LoginForm = ({ handleSubmit, error }) => {
     // debugger
     const dispatch = useDispatch()
     const auth = useSelector(state => state.auth.isAuth)
@@ -29,14 +29,14 @@ const LoginForm = (props) => {
     if (auth) return <Navigate to={`../profile/${userId}`} />
     return (
         <FormBlock>
-            <form onSubmit={props.handleSubmit}>
+            <form onSubmit={handleSubmit}>
                 <div>
                     <Field validate={required} placeholder='Email' name={'Email'} component={Input} />
                 </div>
                 <div>
                     <Field validate={required} placeholder='Password' name={'Password'} component={Input} type={'password'} />
                 </div>
-                <ErrorBlock>{props.error}</ErrorBlock>
+                <ErrorBlock>{error}</ErrorBlock>
                 <div>
                     <Field component={'input'} name={'RememberMe'} type={'checkbox'} /> Remember Me
                 </div>

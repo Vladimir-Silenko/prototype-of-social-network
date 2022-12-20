@@ -1,16 +1,16 @@
 import styles from './Users.module.css'
 import { useEffect, } from 'react'
 import { NavLink } from 'react-router-dom'
-import { GetUsersThunkCreator, OnpageChanged, Follow, UnFollow } from '../../redux/users-reducer'
+import { GetUsersThunkCreator, Follow, UnFollow } from '../../redux/users-reducer'
 import { useDispatch, useSelector } from 'react-redux'
-import loader from '../../photo/loader.gif'
 import { useRedirect } from '../../hooks/useRedirect'
 import { useAuth } from '../../redux/selectors'
+import { Paginator } from './Paginator'
+import loader from '../../photo/loader.gif'
 const Users = (props) => {
     // debugger
     const st = useSelector(state => state.users)
     const dispatch = useDispatch()
-    const classNames = require('classnames')
     const pagesCount = Math.ceil(st.totalCount / st.pageSize) //вычисляем количество страниц, и округляем
     const userPhotoUrl = 'https://thumbs.dreamstime.com/b/%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9-%D0%BC-%D0%B0-%D0%B5%D0%BD%D0%B5%D1%86-39968623.jpg'
     const redirect = useRedirect()
@@ -23,19 +23,9 @@ const Users = (props) => {
     if (!useAuth()) return redirect
     return <div>
         {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
-        <div className={styles.page_wrap}> <button className={styles.pageSwitch__btn}>{'<<'}</button> <div className={styles.page}> {pages.map(item => {
+        <Paginator pagesCount={pagesCount} dispatch={dispatch} st={st} />
 
-            return <span
-                onClick={() => dispatch(OnpageChanged(item))}
-                className={st.currentPage === item ? classNames(styles.pageItem, styles.selectedItem)
-                    : classNames(styles.pageItem)}>
-                {item}
-            </span>
-        })}
-
-        </div><button className={styles.pageSwitch__btn}>{'>>'}</button> </div>
-
-        {st.users.map(u => <div className={styles.user}>
+        {st.users.map(u => <div key={u.id} className={styles.user}>
             <span>
                 <NavLink to={`../profile/${u.id}`}>
                     <div className={styles.photo_container}><img

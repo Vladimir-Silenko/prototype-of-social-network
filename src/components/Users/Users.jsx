@@ -22,8 +22,8 @@ const Users = (props) => {
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
     if (!useAuth()) return redirect
     return <div>
-        {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
         <Paginator pagesCount={pagesCount} dispatch={dispatch} st={st} />
+        {st.isFetching ? <img className={styles.loader} src={loader} /> : null}
 
         {st.users.map(u => <div key={u.id} className={styles.user}>
             <span>

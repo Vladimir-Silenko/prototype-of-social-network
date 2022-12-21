@@ -3,7 +3,18 @@ import { OnpageChanged, } from '../../redux/users-reducer'
 import loader from '../../photo/loader.gif'
 import { Btn } from '../reusable/button'
 import { useState } from 'react'
+import styled from 'styled-components'
 
+const Button = styled(Btn)`
+background:transparent;
+color:grey;
+width:30px;
+padding:2px;
+border:none;
+`
+const Container = styled.div`
+margin:40px 30%;
+`
 export const Paginator = ({ st, dispatch, pagesCount }) => {
     // debugger
     const classNames = require('classnames')
@@ -14,9 +25,9 @@ export const Paginator = ({ st, dispatch, pagesCount }) => {
     let [leftborder, setLeftborder] = useState(1)
     let rightborder = leftborder + pageAmount - 1
 
-    return <div>
+    return <Container>
         <div className={styles.page}>
-            {leftborder > 10 && <Btn onClick={() => setLeftborder(leftborder - 10)}>back</Btn>}
+            {leftborder > 10 && <Button onClick={() => setLeftborder(leftborder - 10)}>{'<<'}</Button>}
             {
                 pages.map(item => {
                     if (item >= leftborder && item <= rightborder) {
@@ -30,9 +41,9 @@ export const Paginator = ({ st, dispatch, pagesCount }) => {
                     }
                 })
             }
-            <Btn onClick={() => setLeftborder(rightborder + 1)}>forward</Btn>
+            <Button onClick={() => setLeftborder(rightborder + 1)}>{'>>'}</Button>
 
         </div>
-    </div>
+    </Container>
 
 }

@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
 // import Dialogs from './components/dialogs/Dialogs';
-// import ProfileContainer from './components/profile/profileContainer';
+import ProfileContainer from './components/profile/profileContainer';
 import News from './components/news/News';
 import Music from './components/music/Music';
 import Settings from './components/settings/Settings';
@@ -17,7 +17,7 @@ import { useEffect, } from 'react';
 import { initialiseAPP } from './redux/app-reducer';
 import store from './redux/redux-store';
 const Dialogs = React.lazy(() => import('./components/dialogs/Dialogs'))
-const ProfileContainer = React.lazy(() => import('./components/profile/profileContainer'))
+// const ProfileContainer = React.lazy(() => import('./components/profile/profileContainer'))
 
 const App = (props) => {
   const init = useSelector(state => state.app.initialise)

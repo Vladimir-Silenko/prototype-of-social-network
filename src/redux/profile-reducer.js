@@ -1,9 +1,11 @@
+import { act } from "react-test-renderer";
 import { profileApi } from "../api/useApi";
 
 const AddPost = 'AddPost';
 const DELETE_POST = 'DELETE_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
+const POST_IS_LIKED = 'POST_IS_LIKED'
 let initialState = {
     newPostText: '',
     profile: null,
@@ -12,19 +14,22 @@ let initialState = {
             id: 1,
             post: 'Hey! how are you?',
             likes: 24,
-            created: new Date().getTime()
+            created: new Date().getTime(),
+            isLiked: false,
         },
         {
             id: 2,
             post: 'Fine',
             likes: 20,
-            created: new Date().getTime()
+            created: new Date().getTime(),
+            isLiked: true,
         },
         {
             id: 3,
             post: 'When  will you  come back?',
             likes: 15,
-            created: new Date().getTime()
+            created: new Date().getTime(),
+            isLiked: true,
         },
     ],
     status: ''
@@ -61,6 +66,21 @@ const ProfileReducer = (state = initialState, action) => {
                 status: action.status
             }
         }
+        case POST_IS_LIKED: {
+            return {
+                ...state,
+                postData: [...state.postData.map(item => {
+                    if (item.id == action.itemId) {
+                        item.isLiked = action.liked
+                        item.likes = action.likesCount
+                        console.log('state ' + item.isLiked)
+                        console.log('action ' + action.liked)
+                    }
+                    return item
+                })]
+
+            }
+        }
         default:
             return state
     }
@@ -70,6 +90,7 @@ export let addPostActionCreator = (text) => ({ type: AddPost, text });
 export let deletePostAC = (postId) => ({ type: DELETE_POST, postId })
 export let setUserProfileAC = (profile) => ({ type: SET_USER_PROFILE, profile })
 export let setStatusAC = (status) => ({ type: SET_STATUS, status: status })
+export let postIsLikedAC = (liked, itemId, likesCount) => ({ type: POST_IS_LIKED, liked, itemId, likesCount })
 
 export const GetUserProfile = (params) => async (dispatch) => {
     let response = await profileApi.GetProfile(params)

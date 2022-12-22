@@ -1,15 +1,9 @@
-import React, { useEffect } from "react"
 import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
 import { GetUserStatus, UpdateUserStatus } from "../../../redux/profile-reducer"
-const ProfileStatus = (props) => {
-    const params = useParams()
-    const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(GetUserStatus(params))
-    }, [])
-    const [statusText, setStatusText] = useState(props.status)
+
+const ProfileStatus = ({ params, dispatch, status }) => {
+
+    const [statusText, setStatusText] = useState(status)
     const [editMode, setState] = useState(false)
     const onStatusChange = (e) => {
         setStatusText(e.currentTarget.value)

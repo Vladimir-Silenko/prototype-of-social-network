@@ -16,7 +16,15 @@ width:80%;
 const MyPosts = (props) => {
     let posts = useSelector(state => state.profile.postData)
     const dispatch = useDispatch()
-    posts = posts.map(p => (<Post dispatch={dispatch} id={p.id} time={p.created} key={p.id} message={p.post} likes={p.likes} />))
+    posts = posts.map(p => (
+        <Post
+            time={p.created}
+            id={p.id}
+            key={p.id} message={p.post}
+            likes={p.likes}
+            isLiked={p.isLiked}
+            dispatch={dispatch}
+        />))
     return <PostContainer>
         {posts}
     </PostContainer>

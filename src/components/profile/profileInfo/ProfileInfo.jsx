@@ -2,11 +2,19 @@
 import styles from './ProfileInfo.module.css'
 import loader from '../../../photo/loader.gif'
 import ProfileStatus from './profileStatus'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
+import { GetUserStatus } from '../../../redux/profile-reducer'
+import { useEffect } from 'react'
 const ProfileInfo = (props) => {
-    // debugger
+
     const status = useSelector(state => state.profile.status)
-    const userPhotoUrl = 'https://thumbs.dreamstime.com/b/%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9-%D0%BC-%D0%B0-%D0%B5%D0%BD%D0%B5%D1%86-39968623.jpg'
+    const params = useParams()
+    const dispatch = useDispatch()
+    useEffect(() => {
+        dispatch(GetUserStatus(params))
+    }, [])
+
     if (props.state === null) return <img src={loader} />
     return <div className={styles.descriptionBlock}>
         <div className={styles.main_info}>
@@ -14,7 +22,7 @@ const ProfileInfo = (props) => {
             <div className={styles.contacts}>
 
                 <span className={styles.fullname}>{props.state.fullName} </span><br />
-                <ProfileStatus status={status} />
+                <ProfileStatus params={params} dispatch={dispatch} status={status} />
                 <span><a href='#'>{props.state.contacts.vk}</a> </span><br />
                 <span><a href='#'>{props.state.contacts.twitter}</a> </span><br />
                 <span><a href='#'>{props.state.contacts.facebook}</a> </span><br />

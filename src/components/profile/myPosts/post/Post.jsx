@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { useState } from "react";
 import styled from "styled-components";
-import { deletePostAC } from "../../../../redux/profile-reducer";
+import { deletePostAC, postIsLikedAC } from "../../../../redux/profile-reducer";
 import { Btn } from "../../../reusable/button";
 
 const PostItem = styled.div`
@@ -41,8 +41,16 @@ color:darkblue;
 `
 
 let style = { display: 'flex', justifyContent: 'space-between' }
-let Post = ({ message, time, likes, dispatch, id }) => {
-    let [liked, setLike] = useState(true)
+let Post = ({ message, time, likes, dispatch, id, isLiked }) => {
+    let [liked, setLike] = useState(isLiked)
+    let [likesCount, setLikesCount] = useState(likes)
+    const likePost = (itemId) => {
+        liked ? setLike(false) : setLike(true)
+        !liked ? setLikesCount(likesCount + 1) : setLikesCount(likesCount - 1)
+        dispatch(postIsLikedAC(liked, itemId, likesCount))
+
+    }
+
     const deleteMessage = (postId) => {
         dispatch(deletePostAC(postId))
     }
@@ -51,7 +59,7 @@ let Post = ({ message, time, likes, dispatch, id }) => {
         <PostMain>
             <p>{message}</p>
             <span style={style}>
-                <div> <Like liked={liked} onClick={() => setLike(!liked)}>♥</Like><LikesCount> {likes}</LikesCount> people liked this</div>
+                <div> <Like liked={liked} onClick={() => likePost(id)}>♥</Like><LikesCount> {likesCount}</LikesCount> people liked this</div>
                 <span>{dayjs(time).format('D.MMM HH:mm')}</span>
                 <Btn id={id} onClick={(e) => deleteMessage(e.target.id)} style={{ margin: '0' }}>Delete</Btn>
             </span>

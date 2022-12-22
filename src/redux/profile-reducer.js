@@ -73,8 +73,6 @@ const ProfileReducer = (state = initialState, action) => {
                     if (item.id == action.itemId) {
                         item.isLiked = action.liked
                         item.likes = action.likesCount
-                        console.log('state ' + item.isLiked)
-                        console.log('action ' + action.liked)
                     }
                     return item
                 })]

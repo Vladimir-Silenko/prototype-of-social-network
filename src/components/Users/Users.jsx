@@ -48,9 +48,9 @@ const Users = (props) => {
                 <div className={styles.status}>{u.status}</div>
             </span>
 
-            <span className={styles.location}>{"u.location.city"}, {"u.location.country"}</span>
+            <span className={styles.location}>{u.id}, { }</span>
 
         </div>)}
     </div>
 }
-export { Users, }
+export { Users }

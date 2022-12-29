@@ -33,6 +33,13 @@ const profileApi = {
     updateStatus(status) {
         return instance.put(`profile/status`, { status }).then(response => response)
     },
+    savePhoto(photo) {
+        let formData = new FormData()
+        formData.append("image", photo)
+        return instance.put(`profile/photo`, formData, {
+            'Content-Type': 'multipart/form-data'
+        }).then(response => response)
+    },
 }
 
 const authApi = {

@@ -13,6 +13,7 @@
 
 .avatar {
     grid-area: avatar;
+    max-width: 300px;
 }
 
 .fullname {

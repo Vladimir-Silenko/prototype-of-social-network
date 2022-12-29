@@ -4,32 +4,76 @@ import loader from '../../../photo/loader.gif'
 import ProfileStatus from './profileStatus'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { GetUserStatus } from '../../../redux/profile-reducer'
+import { GetUserProfile, GetUserStatus, UpdateUserPhoto } from '../../../redux/profile-reducer'
 import { useEffect } from 'react'
-const ProfileInfo = (props) => {
+import { useState } from 'react'
 
+
+
+
+const ProfileInfo = ({ state, isOwner }) => {
+
+    const userPhotoUrl = 'https://thumbs.dreamstime.com/b/%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9-%D0%BC-%D0%B0-%D0%B5%D0%BD%D0%B5%D1%86-39968623.jpg'
     const status = useSelector(state => state.profile.status)
     const params = useParams()
     const dispatch = useDispatch()
+    const [Update, setUpdate] = useState(false)
+
+
+
+    const selectPhoto = (e) => {
+        if (e.target.files.length) {
+            dispatch(UpdateUserPhoto(e.target.files[0]))
+        }
+        setTimeout(() => {
+            setUpdate(!Update)
+        }, 2000);
+        e.target.value = null
+    }
+
     useEffect(() => {
         dispatch(GetUserStatus(params))
-    }, [])
+        dispatch(GetUserProfile(params))
+    }, [null, params, Update])
 
-    if (props.state === null) return <img src={loader} />
+
+    if (!state) return <img src={loader} />
+    console.log(state.contacts)
+
     return <div className={styles.descriptionBlock}>
         <div className={styles.main_info}>
-            <img src={props.state.photos.large} className={styles.avatar} />
-            <div className={styles.contacts}>
 
-                <span className={styles.fullname}>{props.state.fullName} </span><br />
-                <ProfileStatus params={params} dispatch={dispatch} status={status} />
-                <span><a href='#'>{props.state.contacts.vk}</a> </span><br />
-                <span><a href='#'>{props.state.contacts.twitter}</a> </span><br />
-                <span><a href='#'>{props.state.contacts.facebook}</a> </span><br />
-                <span> <a href='#'>{props.state.contacts.instagram}</a> </span><br />
-            </div>
+            <img src={state.photos.large || userPhotoUrl} className={styles.avatar} />
+
+            {isOwner == params.userId && <><input type='file' onChange={selectPhoto} /></>}
+
+            <ProfileData dispatch={dispatch} state={state} status={status} params={params} />
         </div>
 
+    </div>
+}
+
+const ProfileData = ({ state, status, params, dispatch }) => {
+
+    const Contact = ({ contactTitle, contactValue }) => {
+        return <div><b>{contactTitle}</b>: {contactValue}</div>
+    }
+
+    return <div className={styles.contacts}>
+        <span className={styles.fullname}>{state.fullName} </span><br />
+        <ProfileStatus params={params} dispatch={dispatch} status={status} />
+
+        <div style={{ marginTop: '10px', }}>
+            <div><b>looking for a job</b>: {state.lookingForAJob ? 'yes' : 'no'}<br /></div>
+            {state.lookingForAJob &&
+                <div><b>my professional skills</b>:{state.lookingForAJobDescription}<br /></div>}
+            {state.aboutMe &&
+                <div><b>about me</b>: {state.aboutMe}<br /></div>}
+            <div></div>
+        </div>
+        {Object.keys(state.contacts).map(key => {
+            if (state.contacts[key]) return <Contact key={key} contactTitle={key} contactValue={state.contacts[key]} />
+        })}
     </div>
 }
 export default ProfileInfo

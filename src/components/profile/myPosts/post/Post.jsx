@@ -41,7 +41,7 @@ color:darkblue;
 `
 
 let style = { display: 'flex', justifyContent: 'space-between' }
-let Post = ({ message, time, likes, dispatch, id, isLiked }) => {
+let Post = ({ message, time, likes, dispatch, id, isLiked, }) => {
     let [liked, setLike] = useState(isLiked)
     let [likesCount, setLikesCount] = useState(likes)
     const likePost = (itemId) => {

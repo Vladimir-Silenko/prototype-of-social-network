@@ -3,7 +3,6 @@ import './App.css';
 import React, { Suspense } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
-// import Dialogs from './components/dialogs/Dialogs';
 import ProfileContainer from './components/profile/profileContainer';
 import News from './components/news/News';
 import Music from './components/music/Music';
@@ -53,7 +52,7 @@ const App = (props) => {
 }
 const SamuraiJSApp = (props) => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Provider store={store}>
         <App />
       </Provider>

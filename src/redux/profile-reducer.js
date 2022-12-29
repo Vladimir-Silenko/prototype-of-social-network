@@ -6,6 +6,7 @@ const DELETE_POST = 'DELETE_POST'
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const POST_IS_LIKED = 'POST_IS_LIKED'
+const SAVE_PHOTO = 'SAVE_PHOTO'
 let initialState = {
     newPostText: '',
     profile: null,
@@ -79,6 +80,12 @@ const ProfileReducer = (state = initialState, action) => {
 
             }
         }
+        case SAVE_PHOTO: {
+            return {
+                ...state,
+                photos: { ...state.profile, photos: action.photos }
+            }
+        }
         default:
             return state
     }
@@ -89,6 +96,7 @@ export let deletePostAC = (postId) => ({ type: DELETE_POST, postId })
 export let setUserProfileAC = (profile) => ({ type: SET_USER_PROFILE, profile })
 export let setStatusAC = (status) => ({ type: SET_STATUS, status: status })
 export let postIsLikedAC = (liked, itemId, likesCount) => ({ type: POST_IS_LIKED, liked, itemId, likesCount })
+export let savePhotoAC = (photos) => ({ type: SAVE_PHOTO, photos })
 
 export const GetUserProfile = (params) => async (dispatch) => {
     let response = await profileApi.GetProfile(params)
@@ -106,6 +114,15 @@ export const UpdateUserStatus = (status) => async (dispatch) => {
 
     if (response.data.resultCode === 0) {
         dispatch(setStatusAC(status))
+    }
+
+
+}
+export const UpdateUserPhoto = (photo) => async (dispatch) => {
+    let response = await profileApi.savePhoto(photo)
+
+    if (response.data.resultCode === 0) {
+        dispatch(savePhotoAC(response.data.photo))
     }
 
 

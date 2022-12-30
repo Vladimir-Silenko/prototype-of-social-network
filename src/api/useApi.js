@@ -40,6 +40,9 @@ const profileApi = {
             'Content-Type': 'multipart/form-data'
         }).then(response => response)
     },
+    saveProfile(profile) {
+        return instance.put(`profile`, profile).then(response => response)
+    },
 }
 
 const authApi = {

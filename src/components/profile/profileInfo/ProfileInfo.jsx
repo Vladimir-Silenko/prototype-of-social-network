@@ -4,9 +4,11 @@ import loader from '../../../photo/loader.gif'
 import ProfileStatus from './profileStatus'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { GetUserProfile, GetUserStatus, UpdateUserPhoto } from '../../../redux/profile-reducer'
+import { GetUserProfile, GetUserStatus, saveProfile, UpdateUserPhoto } from '../../../redux/profile-reducer'
 import { useEffect } from 'react'
 import { useState } from 'react'
+import { Btn } from '../../reusable/button'
+import ProfileDataForm from './ProfileDataForm'
 
 
 
@@ -18,6 +20,7 @@ const ProfileInfo = ({ state, isOwner }) => {
     const params = useParams()
     const dispatch = useDispatch()
     const [Update, setUpdate] = useState(false)
+    const [editMode, setEditMode] = useState(false)
 
 
 
@@ -29,6 +32,7 @@ const ProfileInfo = ({ state, isOwner }) => {
             setUpdate(!Update)
         }, 2000);
         e.target.value = null
+
     }
 
     useEffect(() => {
@@ -38,7 +42,11 @@ const ProfileInfo = ({ state, isOwner }) => {
 
 
     if (!state) return <img src={loader} />
-    console.log(state.contacts)
+
+    const onSubmit = (formData) => {
+        dispatch(saveProfile(formData))
+        setEditMode(!editMode)
+    }
 
     return <div className={styles.descriptionBlock}>
         <div className={styles.main_info}>
@@ -47,17 +55,23 @@ const ProfileInfo = ({ state, isOwner }) => {
 
             {isOwner == params.userId && <><input type='file' onChange={selectPhoto} /></>}
 
-            <ProfileData dispatch={dispatch} state={state} status={status} params={params} />
+            {editMode ?
+                <ProfileDataForm onSubmit={onSubmit} state={state} />
+                :
+                <ProfileData editMode={editMode} setEditMode={setEditMode} isOwner={isOwner} dispatch={dispatch} state={state} status={status} params={params} />
+            }
+
         </div>
 
     </div>
 }
+const ProfileData = ({ editMode, setEditMode, state, status, params, dispatch, isOwner }) => {
 
-const ProfileData = ({ state, status, params, dispatch }) => {
 
     const Contact = ({ contactTitle, contactValue }) => {
         return <div><b>{contactTitle}</b>: {contactValue}</div>
     }
+
 
     return <div className={styles.contacts}>
         <span className={styles.fullname}>{state.fullName} </span><br />
@@ -65,15 +79,24 @@ const ProfileData = ({ state, status, params, dispatch }) => {
 
         <div style={{ marginTop: '10px', }}>
             <div><b>looking for a job</b>: {state.lookingForAJob ? 'yes' : 'no'}<br /></div>
-            {state.lookingForAJob &&
-                <div><b>my professional skills</b>:{state.lookingForAJobDescription}<br /></div>}
-            {state.aboutMe &&
-                <div><b>about me</b>: {state.aboutMe}<br /></div>}
+
+            {
+                state.lookingForAJob &&
+                <div><b>my professional skills</b>:{state.lookingForAJobDescription}<br /></div>
+            }
+
+            {
+                state.aboutMe &&
+                <div><b>about me</b>: {state.aboutMe}<br /></div>
+
+            }
+
             <div></div>
         </div>
         {Object.keys(state.contacts).map(key => {
             if (state.contacts[key]) return <Contact key={key} contactTitle={key} contactValue={state.contacts[key]} />
         })}
+        {isOwner == params.userId && <><Btn onClick={() => setEditMode(!editMode)}>Edit</Btn></>}
     </div>
 }
 export default ProfileInfo

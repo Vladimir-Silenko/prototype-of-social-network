@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { Input } from "../components/reusable/input"
 import { Btn } from "../components/reusable/button"
 import { required } from '../utils/validators'
-import { Navigate, useParams } from "react-router-dom"
+import { Navigate } from "react-router-dom"
 import { useEffect } from "react"
 import { SetCurrentUser } from "../redux/navbar-reducer"
 const FormBlock = styled.div`

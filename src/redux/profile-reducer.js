@@ -120,9 +120,16 @@ export const UpdateUserStatus = (status) => async (dispatch) => {
 }
 export const UpdateUserPhoto = (photo) => async (dispatch) => {
     let response = await profileApi.savePhoto(photo)
-
     if (response.data.resultCode === 0) {
         dispatch(savePhotoAC(response.data.photo))
+    }
+
+
+}
+export const saveProfile = (profile) => async (dispatch) => {
+    let response = await profileApi.saveProfile(profile)
+    if (response.data.resultCode === 0) {
+        dispatch(setUserProfileAC(response))
     }
 
 

@@ -2,12 +2,12 @@
     padding: 10px;
     display: grid;
     grid-template-columns: 1fr 5fr;
-    grid-template-areas: 'avatar contacts';
+    grid-template-areas: 'avatar info';
     grid-gap: 10px;
 }
 
 .contacts {
-    grid-area: contacts;
+    grid-area: info;
     display: block;
 }
 

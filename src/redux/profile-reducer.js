@@ -1,4 +1,5 @@
 import { act } from "react-test-renderer";
+import { stopSubmit } from "redux-form";
 import { profileApi } from "../api/useApi";
 
 const AddPost = 'AddPost';
@@ -126,10 +127,11 @@ export const UpdateUserPhoto = (photo) => async (dispatch) => {
 
 
 }
-export const saveProfile = (profile) => async (dispatch) => {
+export const saveProfile = (profile) => async (dispatch, getState) => {
+    // const userId = getState().auth.userId
     let response = await profileApi.saveProfile(profile)
-    if (response.data.resultCode === 0) {
-        dispatch(setUserProfileAC(response))
+    if (response.data.resultCode != 0) {
+        dispatch(stopSubmit('profile', { _error: response.data.messages[0] }))
     }
 
 

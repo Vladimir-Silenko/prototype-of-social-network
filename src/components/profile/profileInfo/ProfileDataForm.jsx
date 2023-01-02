@@ -4,34 +4,71 @@ import styled from 'styled-components'
 import { Input } from '../../reusable/input'
 import { Field, reduxForm } from 'redux-form'
 import { Textarea } from '../../reusable/Textarea'
-const Modal = styled.div`
-grid-area: info;
-display: block;
+const CancelBtn = styled(Btn)`
+margin-left:655px;
+margin-bottom:550px;
+width:30px;
+border:none;
+background:transparent;
+font-size:20px;
+`
+const ModalContainer = styled.div`
+position:fixed;
+height:100vh;
+width:100vw;
+top:0;
+left:0;
+display:flex;
+align-items:center;
+justify-content:center;
+background-color:rgba(0,0,0,0.4);
+color white
+`
+const ModalContent = styled.div`
+width:600px;
+height:500px;
+padding:10px;
+background:#ededed;
+color:black;
+position:absolute;
 `
 
-const ProfileDataForm = ({ state, handleSubmit }) => {
+const ProfileDataForm = (props) => {
 
+    console.log(props.initialValues)
+    return <ModalContainer>
 
-    return <Modal>
-        <form onSubmit={handleSubmit}>
-            <div>
-                <b>Looking for a job</b>:<Field component={'input'} name={'LookingForAJob'} type={'checkbox'} />
-            </div>
+        <ModalContent>
+            <form onSubmit={props.handleSubmit}>
+                <div>
+                    <b>Looking for a job</b>:<Field value={'hey'} component={'input'} name='lookingForAJob' type={'checkbox'} />
+                </div>
 
-            <div>
-                <b>Full name</b>: <Field placeholder='Enter your full name' name={'FullName'} component={Input} />
-            </div>
-            <div>
-                <b>About me</b>: <Field placeholder='About me' name={'AboutMe'} component={Input} />
-            </div>
+                <div>
+                    <b>Full name</b>: <Field placeholder='Enter your full name' name='fullName' component={Input} />
+                </div>
+                <div>
+                    <b>About me</b>: <Field placeholder='About me' name='aboutMe' component={Input} />
+                </div>
 
-            <div>
-                <b>my professional skills</b>:<Field placeholder='Describe your skills' name={'LookingForAJobDescription'} component={Textarea} />
-            </div>
-            <Btn>Save</Btn>
-        </form>
+                <div>
+                    <b>my professional skills</b>:<Field placeholder='Describe your skills' name='lookingForAJobDescription' component={Textarea} />
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    {Object.keys(props.profile.contacts).map(item => {
+                        return <div key={item}>
+                            <b>{item}:</b>  <Field key={item} placeholder={item} name={'contacts.' + item} component={Input} />
+                        </div>
+                    })}
+                </div>
+                {props.error && <div>{props.error}</div>}
+                <Btn>Save</Btn>
+            </form>
 
-    </Modal>
+        </ModalContent>
+        <CancelBtn onClick={() => props.setEditMode(!props.editMode)}>x</CancelBtn>
+    </ModalContainer>
+
 }
-const ProfileDataReduxForm = reduxForm({ form: 'editProfileForm' })(ProfileDataForm)
+const ProfileDataReduxForm = reduxForm({ form: "profile", enableReinitialize: true, })(ProfileDataForm)
 export default ProfileDataReduxForm

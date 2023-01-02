@@ -28,7 +28,7 @@ let ProfileContainer = (props) => {
     if (!useAuth()) return redirect
     return <div >
 
-        <ProfileInfo isOwner={userId} state={st.profile} />
+        <ProfileInfo isOwner={userId} profile={st.profile} />
         <SendPostContainer state={st} />
         <MyPosts />
     </div >

@@ -4,14 +4,11 @@ import loader from '../../../photo/loader.gif'
 import ProfileStatus from './profileStatus'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { GetUserProfile, GetUserStatus, saveProfile, UpdateUserPhoto } from '../../../redux/profile-reducer'
+import { GetUserProfile, GetUserStatus, profileIsUpdatedAC, saveProfile, UpdateUserPhoto } from '../../../redux/profile-reducer'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Btn } from '../../reusable/button'
 import ProfileDataForm from './ProfileDataForm'
-
-
-
 
 const ProfileInfo = ({ profile, isOwner }) => {
 
@@ -22,7 +19,10 @@ const ProfileInfo = ({ profile, isOwner }) => {
     const [Update, setUpdate] = useState(false)
     const [editMode, setEditMode] = useState(false)
 
-
+    const EnterEditmode = () => {
+        setEditMode(true)
+        dispatch(profileIsUpdatedAC(''))
+    }
 
     const selectPhoto = (e) => {
         if (e.target.files.length) {
@@ -45,7 +45,6 @@ const ProfileInfo = ({ profile, isOwner }) => {
 
     const onSubmit = (formData) => {
         dispatch(saveProfile(formData))
-        // setEditMode(!editMode)
         setTimeout(() => {
             dispatch(GetUserProfile(params))
         }, 1000);
@@ -58,7 +57,7 @@ const ProfileInfo = ({ profile, isOwner }) => {
 
             {isOwner == params.userId && <><input type='file' onChange={selectPhoto} /></>}
 
-            <ProfileData editMode={editMode} setEditMode={setEditMode} isOwner={isOwner} dispatch={dispatch} profile={profile} status={status} params={params} />
+            <ProfileData EnterEditmode={EnterEditmode} isOwner={isOwner} dispatch={dispatch} profile={profile} status={status} params={params} />
             {editMode ?
                 <ProfileDataForm
                     dispatch={dispatch}
@@ -76,7 +75,7 @@ const ProfileInfo = ({ profile, isOwner }) => {
 
     </div>
 }
-const ProfileData = ({ editMode, setEditMode, profile, status, params, dispatch, isOwner }) => {
+const ProfileData = ({ EnterEditmode, profile, status, params, dispatch, isOwner }) => {
 
 
     const Contact = ({ contactTitle, contactValue }) => {
@@ -107,7 +106,7 @@ const ProfileData = ({ editMode, setEditMode, profile, status, params, dispatch,
         {Object.keys(profile.contacts).map(key => {
             if (profile.contacts[key]) return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]} />
         })}
-        {isOwner == params.userId && <><Btn onClick={() => setEditMode(!editMode)}>Edit</Btn></>}
+        {isOwner == params.userId && <><Btn onClick={() => { EnterEditmode() }}>Edit</Btn></>}
     </div>
 }
 export default ProfileInfo

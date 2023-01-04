@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Input } from '../../reusable/input'
 import { Field, reduxForm } from 'redux-form'
 import { Textarea } from '../../reusable/Textarea'
+import { useSelector } from 'react-redux'
 const CancelBtn = styled(Btn)`
 margin-left:655px;
 margin-bottom:550px;
@@ -22,7 +23,7 @@ display:flex;
 align-items:center;
 justify-content:center;
 background-color:rgba(0,0,0,0.4);
-color white
+color: white;
 `
 const ModalContent = styled.div`
 width:600px;
@@ -34,8 +35,8 @@ position:absolute;
 `
 
 const ProfileDataForm = (props) => {
-
-    console.log(props.initialValues)
+    const isUpdated = useSelector(state => state.profile.isUpdated)
+    console.log(isUpdated)
     return <ModalContainer>
 
         <ModalContent>
@@ -61,8 +62,9 @@ const ProfileDataForm = (props) => {
                         </div>
                     })}
                 </div>
+                <Btn>Save</Btn><br />
                 {props.error && <div>{props.error}</div>}
-                <Btn>Save</Btn>
+                {<span style={{ color: 'green' }}>{isUpdated}</span>}
             </form>
 
         </ModalContent>

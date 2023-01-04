@@ -8,7 +8,9 @@ const SET_USER_PROFILE = 'SET_USER_PROFILE'
 const SET_STATUS = 'SET_STATUS'
 const POST_IS_LIKED = 'POST_IS_LIKED'
 const SAVE_PHOTO = 'SAVE_PHOTO'
+const POST_IS_UPDATED = 'POST_IS_UPDATED'
 let initialState = {
+    isUpdated: '',
     newPostText: '',
     profile: null,
     postData: [
@@ -87,6 +89,12 @@ const ProfileReducer = (state = initialState, action) => {
                 photos: { ...state.profile, photos: action.photos }
             }
         }
+        case POST_IS_UPDATED: {
+            return {
+                ...state,
+                isUpdated: action.isUpdated,
+            }
+        }
         default:
             return state
     }
@@ -98,6 +106,7 @@ export let setUserProfileAC = (profile) => ({ type: SET_USER_PROFILE, profile })
 export let setStatusAC = (status) => ({ type: SET_STATUS, status: status })
 export let postIsLikedAC = (liked, itemId, likesCount) => ({ type: POST_IS_LIKED, liked, itemId, likesCount })
 export let savePhotoAC = (photos) => ({ type: SAVE_PHOTO, photos })
+export const profileIsUpdatedAC = (isUpdated) => ({ type: POST_IS_UPDATED, isUpdated })
 
 export const GetUserProfile = (params) => async (dispatch) => {
     let response = await profileApi.GetProfile(params)
@@ -132,6 +141,9 @@ export const saveProfile = (profile) => async (dispatch, getState) => {
     let response = await profileApi.saveProfile(profile)
     if (response.data.resultCode != 0) {
         dispatch(stopSubmit('profile', { _error: response.data.messages[0] }))
+    }
+    else {
+        dispatch(profileIsUpdatedAC('Profile successfully updated'))
     }
 
 

@@ -37,14 +37,23 @@ const ProfileInfo = ({ profile, isOwner }) => {
     useEffect(() => {
         dispatch(GetUserStatus(params))
         dispatch(GetUserProfile(params))
-    }, [null, params, Update])
+    }, [null, params, Update,])
 
 
     if (!profile) return <img src={loader} />
 
-    const onSubmit = async (formData) => {
-        await dispatch(saveProfile(formData))
-            .then(() => dispatch(GetUserProfile(params)))
+    const onSubmit = (formData) => {
+        dispatch(saveProfile(formData)).then(
+            () => {
+                dispatch(GetUserProfile(params))
+                setEditMode(false)
+
+            }
+        )
+        // setTimeout(() => {
+        // }, 2000);
+
+
     }
     // debugger
     return <div className={styles.descriptionBlock}>

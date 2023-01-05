@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useParams } from "react-router-dom";
 const instance = axios.create({
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',
     withCredentials: true,
@@ -54,9 +53,16 @@ const authApi = {
     },
     LogoutMe() {
         return instance.delete('auth/login')
-    }
+    },
+
+}
+
+const securityApi = {
+    GetCaptcha() {
+        return instance.get('security/get-captcha-url').then(response => response)
+    },
 }
 
 
 
-export { profileApi, UserApi, authApi }
+export { profileApi, UserApi, authApi, securityApi }

@@ -64,9 +64,9 @@ const ProfileDataForm = (props) => {
 
                     </div>
                     <Btn>Save</Btn><br />
-                    {props.error ? <div style={{ color: '#E60C0C' }}>{props.error}</div>
-                        :
-                        <span style={{ color: 'green' }}>{isUpdated}</span>
+                    {props.error && <div style={{ color: '#E60C0C' }}>{props.error}</div>
+                        // :
+                        // <span style={{ color: 'green' }}>{isUpdated}</span>
                     }
                     { }
                 </form>

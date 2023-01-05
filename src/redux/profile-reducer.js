@@ -139,8 +139,10 @@ export const UpdateUserPhoto = (photo) => async (dispatch) => {
 export const saveProfile = (profile) => async (dispatch, getState) => {
     // const userId = getState().auth.userId
     let response = await profileApi.saveProfile(profile)
+
     if (response.data.resultCode != 0) {
         dispatch(stopSubmit('profile', { _error: response.data.messages[0] }))
+        return Promise.reject(response.data.messages[0])
     }
     else {
         dispatch(profileIsUpdatedAC('Profile successfully updated'))

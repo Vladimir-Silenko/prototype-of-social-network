@@ -36,40 +36,46 @@ position:absolute;
 
 const ProfileDataForm = (props) => {
     const isUpdated = useSelector(state => state.profile.isUpdated)
-    console.log(isUpdated)
-    return <ModalContainer>
+    return (
+        <ModalContainer>
 
-        <ModalContent>
-            <form onSubmit={props.handleSubmit}>
-                <div>
-                    <b>Looking for a job</b>:<Field value={'hey'} component={'input'} name='lookingForAJob' type={'checkbox'} />
-                </div>
+            <ModalContent>
+                <form onSubmit={props.handleSubmit}>
+                    <div>
+                        <b>Looking for a job</b>:<Field value={'hey'} component={'input'} name='lookingForAJob' type={'checkbox'} />
+                    </div>
 
-                <div>
-                    <b>Full name</b>: <Field placeholder='Enter your full name' name='fullName' component={Input} />
-                </div>
-                <div>
-                    <b>About me</b>: <Field placeholder='About me' name='aboutMe' component={Input} />
-                </div>
+                    <div>
+                        <b>Full name</b>: <Field placeholder='Enter your full name' name='fullName' component={Input} />
+                    </div>
+                    <div>
+                        <b>About me</b>: <Field placeholder='About me' name='aboutMe' component={Input} />
+                    </div>
 
-                <div>
-                    <b>my professional skills</b>:<Field placeholder='Describe your skills' name='lookingForAJobDescription' component={Textarea} />
-                </div>
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    {Object.keys(props.profile.contacts).map(item => {
-                        return <div key={item}>
-                            <b>{item}:</b>  <Field key={item} placeholder={item} name={'contacts.' + item} component={Input} />
-                        </div>
-                    })}
-                </div>
-                <Btn>Save</Btn><br />
-                {props.error && <div>{props.error}</div>}
-                {<span style={{ color: 'green' }}>{isUpdated}</span>}
-            </form>
+                    <div>
+                        <b>my professional skills</b>:<Field placeholder='Describe your skills' name='lookingForAJobDescription' component={Textarea} />
+                    </div>
+                    <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                        {Object.keys(props.profile.contacts).map(item => {
+                            return <div key={item}>
+                                <b>{item}:</b>  <Field key={item} placeholder={item} name={'contacts.' + item} component={Input} />
+                            </div>
+                        })}
 
-        </ModalContent>
-        <CancelBtn onClick={() => props.setEditMode(!props.editMode)}>x</CancelBtn>
-    </ModalContainer>
+                    </div>
+                    <Btn>Save</Btn><br />
+                    {props.error ? <div style={{ color: '#E60C0C' }}>{props.error}</div>
+                        :
+                        <span style={{ color: 'green' }}>{isUpdated}</span>
+                    }
+                    { }
+                </form>
+
+            </ModalContent>
+            <CancelBtn onClick={() => props.setEditMode(!props.editMode)}>x</CancelBtn>
+        </ModalContainer>
+    )
+
 
 }
 const ProfileDataReduxForm = reduxForm({ form: "profile", enableReinitialize: true, })(ProfileDataForm)

@@ -24,15 +24,14 @@ const ProfileInfo = ({ profile, isOwner }) => {
         dispatch(profileIsUpdatedAC(''))
     }
 
-    const selectPhoto = (e) => {
+    const selectPhoto = async (e) => {
         if (e.target.files.length) {
-            dispatch(UpdateUserPhoto(e.target.files[0]))
+            await dispatch(UpdateUserPhoto(e.target.files[0]))
+                .then(() => {
+                    setUpdate(!Update)
+                    e.target.value = null
+                })
         }
-        setTimeout(() => {
-            setUpdate(!Update)
-        }, 2000);
-        e.target.value = null
-
     }
 
     useEffect(() => {
@@ -43,11 +42,9 @@ const ProfileInfo = ({ profile, isOwner }) => {
 
     if (!profile) return <img src={loader} />
 
-    const onSubmit = (formData) => {
-        dispatch(saveProfile(formData))
-        setTimeout(() => {
-            dispatch(GetUserProfile(params))
-        }, 1000);
+    const onSubmit = async (formData) => {
+        await dispatch(saveProfile(formData))
+            .then(() => dispatch(GetUserProfile(params)))
     }
     // debugger
     return <div className={styles.descriptionBlock}>

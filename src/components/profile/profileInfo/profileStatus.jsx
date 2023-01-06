@@ -5,21 +5,14 @@ import { GetUserStatus, UpdateUserStatus } from "../../../redux/profile-reducer"
 const ProfileStatus = ({ params, dispatch, status }) => {
     const [statusText, setStatusText] = useState(status)
     const [editMode, setState] = useState(false)
+
     const onStatusChange = (e) => {
         setStatusText(e.currentTarget.value)
     }
-    const getStatus = async () => {
-        await dispatch(GetUserStatus(params))
-            .then(() => {
-                setStatusText(status)
-                console.log(2)
-            })
-    }
 
     useEffect(() => {
-        getStatus()
-        console.log(1)
-    }, [null, params])
+        setStatusText(status)
+    }, [null, status])
 
 
     return <div>

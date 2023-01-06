@@ -8,16 +8,27 @@ const ProfileStatus = ({ params, dispatch, status }) => {
     const onStatusChange = (e) => {
         setStatusText(e.currentTarget.value)
     }
+    const getStatus = async () => {
+        await dispatch(GetUserStatus(params))
+            .then(() => {
+                setStatusText(status)
+                console.log(2)
+            })
+    }
+
     useEffect(() => {
-        setStatusText(status)
+        getStatus()
+        console.log(1)
     }, [null, params])
+
+
     return <div>
         {editMode &&
             <div>
                 <input value={statusText} onChange={onStatusChange} style={{ outline: "none" }} autoFocus={true} onBlur={() => {
-                    setState(false)
                     dispatch(UpdateUserStatus(statusText))
                     dispatch(GetUserStatus(params))
+                    setState(false)
                 }} type="text" name="" id="" />
             </div>}
         {!editMode &&

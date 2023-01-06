@@ -120,33 +120,53 @@ export const GetUserStatus = (params) => async (dispatch) => {
 }
 
 export const UpdateUserStatus = (status) => async (dispatch) => {
-    let response = await profileApi.updateStatus(status)
 
-    if (response.data.resultCode === 0) {
-        dispatch(setStatusAC(status))
+    try {
+        const response = await profileApi.updateStatus(status)
+
+        if (response.data.resultCode === 0) {
+            dispatch(setStatusAC(status))
+            console.log('works')
+        }
+    }
+    catch (error) {
+        alert(error.message)
     }
 
 
 }
 export const UpdateUserPhoto = (photo) => async (dispatch) => {
-    let response = await profileApi.savePhoto(photo)
-    if (response.data.resultCode === 0) {
-        dispatch(savePhotoAC(response.data.photo))
+    try {
+
+        let response = await profileApi.savePhoto(photo)
+        if (response.data.resultCode === 0) {
+            dispatch(savePhotoAC(response.data.photo))
+        }
+    }
+    catch (error) {
+        alert(error.message)
     }
 
 
 }
 export const saveProfile = (profile) => async (dispatch, getState) => {
     // const userId = getState().auth.userId
-    let response = await profileApi.saveProfile(profile)
 
-    if (response.data.resultCode != 0) {
-        dispatch(stopSubmit('profile', { _error: response.data.messages[0] }))
-        return Promise.reject(response.data.messages[0])
+    try {
+        let response = await profileApi.saveProfile(profile)
+
+        if (response.data.resultCode != 0) {
+            dispatch(stopSubmit('profile', { _error: response.data.messages[0] }))
+            return Promise.reject(response.data.messages[0])
+        }
+        else {
+            dispatch(profileIsUpdatedAC('Profile successfully updated'))
+        }
     }
-    else {
-        dispatch(profileIsUpdatedAC('Profile successfully updated'))
+    catch (error) {
+        alert(error.message)
     }
+
 
 
 }

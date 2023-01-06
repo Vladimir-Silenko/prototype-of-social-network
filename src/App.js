@@ -14,7 +14,6 @@ import spinner from './photo/spinner.svg'
 import { useEffect, } from 'react';
 import { initialiseAPP } from './redux/app-reducer';
 import store from './redux/redux-store';
-import { useLayoutEffect } from 'react';
 const Dialogs = React.lazy(() => import('./components/dialogs/Dialogs'))
 const ProfileContainer = React.lazy(() => import('./components/profile/profileContainer'))
 
@@ -22,22 +21,9 @@ const App = (props) => {
   const init = useSelector(state => state.app.initialise)
   const dispatch = useDispatch()
 
-  const AllUncaughtErrors = (promiseRejectionEvent) => {
-    // alert("some error occured")
-    console.log("some error occured")
-  }
-
   useEffect(() => {
     dispatch(initialiseAPP())
-    window.addEventListener("unhandeledRejection", AllUncaughtErrors())
   }, [])
-
-  useLayoutEffect(() => {
-    return () => {
-      window.removeEventListener("unhandeledRejection", AllUncaughtErrors())
-    }
-  }, [])
-
 
   if (init === false) {
     return <img src={spinner} />

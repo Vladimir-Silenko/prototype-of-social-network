@@ -2,7 +2,9 @@ import { AuthData } from "./auth-reducer"
 
 const SET_INITIALISE = 'SET_INITIALISE'
 const initialstate = {
-    initialise: false
+    initialise: false,
+    error: null,
+
 }
 export const appReducer = (state = initialstate, action) => {
     switch (action.type) {
@@ -18,6 +20,7 @@ export const appReducer = (state = initialstate, action) => {
     }
 }
 export const initialiseAc = () => ({ type: SET_INITIALISE })
+
 export const initialiseAPP = () => (dispatch) => {
     let promise = dispatch(AuthData())
     Promise.all([promise]).then(() => {

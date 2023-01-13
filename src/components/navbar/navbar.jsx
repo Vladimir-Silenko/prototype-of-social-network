@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
-import { SetCurrentUser } from '../../redux/navbar-reducer'
+import { SetCurrentUser } from '../../redux/navbar-reducer.ts'
 import Friendlist from './friendlist/Friendlist'
 import classes from './navbar.module.css'
 let Navbar = (props) => {

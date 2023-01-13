@@ -1,7 +1,7 @@
 import { applyMiddleware, combineReducers, compose, legacy_createStore as createStore } from "redux";
 import ProfileReducer from './profile-reducer'
 import DialogsReducer from './dialogs-reducer'
-import NavbarReducer from './navbar-reducer'
+import NavbarReducer from './navbar-reducer.ts'
 import UsersReduser from "./users-reducer";
 import authReducer from "./auth-reducer";
 import thunkMiddleware from 'redux-thunk' // additional slice to run thunk

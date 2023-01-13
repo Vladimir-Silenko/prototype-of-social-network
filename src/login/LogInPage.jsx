@@ -8,7 +8,10 @@ import { Btn } from "../components/reusable/button"
 import { required } from '../utils/validators'
 import { Navigate } from "react-router-dom"
 import { useEffect } from "react"
-import { SetCurrentUser } from "../redux/navbar-reducer"
+import { SetCurrentUser } from "../redux/navbar-reducer.ts"
+
+
+
 const FormBlock = styled.div`
 display:flex;
 flex-direction:column;

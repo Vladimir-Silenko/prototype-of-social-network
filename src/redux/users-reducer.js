@@ -63,7 +63,7 @@ const UsersReduser = (state = initialstate, action) => {
             return {
                 ...state,
                 toggleFollowing: action.isFetching ? [...state.toggleFollowing, action.userId]
-                    : state.toggleFollowing.filter(id => id != action.userId)
+                    : state.toggleFollowing.filter(id => id !== action.userId)
             }
         }
         default:
@@ -107,7 +107,7 @@ const FollowUnfollow = async (dispatch, userId, apiMethod, actionCreator) => {
     dispatch(toggleIsFollowingAC(true, userId))
     let data = await apiMethod(userId)
 
-    if (data.resultCode == 0) {
+    if (data.resultCode === 0) {
         dispatch(actionCreator(userId))
     }
     dispatch(toggleIsFollowingAC(false, userId))

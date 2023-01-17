@@ -1,7 +1,7 @@
 
 import { reduxForm, Field } from "redux-form"
 import { useDispatch, useSelector } from 'react-redux'
-import { GetCaptchaUrl, LoginData } from '../redux/auth-reducer'
+import { GetCaptchaUrl, LoginData } from '../redux/auth-reducer.ts'
 import styled from 'styled-components'
 import { Input } from "../components/reusable/input"
 import { Btn } from "../components/reusable/button"

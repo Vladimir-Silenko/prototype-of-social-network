@@ -22,12 +22,12 @@ let initialstate: InitialStateType = {
 }
 
 
-const NavbarReducer = (state = initialstate, action: any) => {
+const NavbarReducer = (state = initialstate, action: any): InitialStateType => {
     switch (action.type) {
         case SET_CURRENT_USER: {
             return {
                 ...state,
-                usersProfile: action.userId
+                usersProfile: action.userId,
             }
         }
         default: {
@@ -35,9 +35,13 @@ const NavbarReducer = (state = initialstate, action: any) => {
         }
     }
 }
-const currentUserAC = (userId: number) => ({ type: SET_CURRENT_USER, userId: userId })
+type CurrentUserACType = {
+    type: typeof SET_CURRENT_USER
+    userId: number
+}
+const currentUserAC = (userId: number): CurrentUserACType => ({ type: SET_CURRENT_USER, userId: userId })
 export const SetCurrentUser = () => {
-    return (dispatch) => {
+    return (dispatch: any) => {
         authApi.AuthMe().then(response => {
             dispatch(currentUserAC(response.data.data.id))
         })

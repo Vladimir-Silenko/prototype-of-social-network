@@ -1,4 +1,3 @@
-import { act } from "react-test-renderer";
 import { stopSubmit } from "redux-form";
 import { profileApi } from "../api/useApi";
 
@@ -54,7 +53,7 @@ const ProfileReducer = (state = initialState, action) => {
         case DELETE_POST: {
             return {
                 ...state,
-                postData: [...state.postData.filter(item => item.id != action.postId)]
+                postData: [...state.postData.filter(item => item.id !== action.postId)]
             }
         }
         case SET_USER_PROFILE: {
@@ -74,7 +73,7 @@ const ProfileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 postData: [...state.postData.map(item => {
-                    if (item.id == action.itemId) {
+                    if (item.id === action.itemId) {
                         item.isLiked = action.liked
                         item.likes = action.likesCount
                     }
@@ -155,7 +154,7 @@ export const saveProfile = (profile) => async (dispatch, getState) => {
     try {
         let response = await profileApi.saveProfile(profile)
 
-        if (response.data.resultCode != 0) {
+        if (response.data.resultCode !== 0) {
             dispatch(stopSubmit('profile', { _error: response.data.messages[0] }))
             return Promise.reject(response.data.messages[0])
         }

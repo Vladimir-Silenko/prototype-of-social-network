@@ -2,7 +2,6 @@ import './App.css';
 import React, { Suspense } from 'react';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import Navbar from './components/navbar/navbar';
-// import ProfileContainer from './components/profile/profileContainer';
 import News from './components/news/News';
 import Music from './components/music/Music';
 import Settings from './components/settings/Settings';
@@ -12,7 +11,7 @@ import { Users } from './components/Users/Users';
 import { Provider, useDispatch, useSelector } from 'react-redux';
 import spinner from './photo/spinner.svg'
 import { useEffect, } from 'react';
-import { initialiseAPP } from './redux/app-reducer';
+import { initialiseAPP } from './redux/app-reducer.ts';
 import store from './redux/redux-store';
 const Dialogs = React.lazy(() => import('./components/dialogs/Dialogs'))
 const ProfileContainer = React.lazy(() => import('./components/profile/profileContainer'))
@@ -26,7 +25,7 @@ const App = (props) => {
   }, [])
 
   if (init === false) {
-    return <img src={spinner} />
+    return <img alt="" src={spinner} />
   }
   const Error = {
     color: 'lightgray',
@@ -44,7 +43,7 @@ const App = (props) => {
       <Header />
       <Navbar />
       <div className='app-wrapper-content'>
-        <Suspense fallback={<img src={spinner} />}>
+        <Suspense fallback={<img alt="" src={spinner} />}>
           <Routes>
             <Route path="/" element={<Navigate to={`/profile/`} />} />
             <Route path="/profile/:userId" element={<ProfileContainer />} />

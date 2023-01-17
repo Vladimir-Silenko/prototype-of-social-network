@@ -1,5 +1,19 @@
 const AddMessage = 'AddMessage'
-let initialstate = {
+type UserType = {
+    name: string
+    surname: string
+    ava: string | null
+    age?: number
+    id: number
+}
+type MessageType = {
+    id: number
+    message: string
+    created: any
+    you?: string
+}
+
+const initialstate = {
     dialogsData: [
         { name: 'Alisa', surname: 'Silenko', ava: 'https://krot.info/uploads/posts/2021-03/1615285482_44-p-kotenok-gav-art-kartinki-46.jpg', age: 4, id: 1, },
         { name: 'Karina', surname: 'Silenko', ava: 'https://funart.pro/uploads/posts/2021-10/1633940898_1-funart-pro-p-zlaya-taksa-zhivotnie-krasivo-foto-2.jpg', age: 26, id: 2, },
@@ -7,8 +21,8 @@ let initialstate = {
         { name: 'Elmishan', surname: 'Aliev', ava: 'https://militaryarms.ru/wp-content/uploads/2021/07/31089611.jpg', age: 55, id: 4, },
         { name: 'Inga', surname: 'Alieva', ava: 'https://pbs.twimg.com/profile_images/755466885953679360/cKVxXXWg_400x400.jpg', age: 28, id: 5, },
         { name: 'Dasha', surname: 'Deshko', ava: 'https://pic.rutubelist.ru/user/3f/a4/3fa484531693f2716dc6d5f4ec102cff.jpg', age: 27, id: 6, },
-    ],
-    newMessageText: '',
+    ] as Array<UserType>,
+    newMessageText: '' as string,
     messageData:
         [
             {
@@ -50,9 +64,12 @@ let initialstate = {
                 message: "I hope it will be soon",
                 created: new Date().getTime()
             },
-        ],
+        ] as Array<MessageType>,
 }
-const DialogsReducer = (state = initialstate, action) => {
+
+type initialStateType = typeof initialstate
+
+const DialogsReducer = (state = initialstate, action: any): initialStateType => {
     switch (action.type) {
         case AddMessage: {
             let newMessageText = action.text
@@ -61,7 +78,8 @@ const DialogsReducer = (state = initialstate, action) => {
                 messageData: [...state.messageData, {
                     id: state.messageData.length + 1,
                     you: 'you',
-                    message: newMessageText
+                    message: newMessageText,
+                    created: new Date().getTime(),
                 }],
                 newMessageText: ''
             }
@@ -71,5 +89,10 @@ const DialogsReducer = (state = initialstate, action) => {
             return state
     };
 }
-export let sendMessageActionCreator = (text) => ({ type: AddMessage, text });
+type sendMessageActionCreatorType = {
+    type: typeof AddMessage
+    text: string
+}
+export let sendMessageActionCreator = (text: string): sendMessageActionCreatorType => ({ type: AddMessage, text });
+
 export default DialogsReducer

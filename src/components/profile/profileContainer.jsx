@@ -17,15 +17,15 @@ let ProfileContainer = (props) => {
     const [isAuth, setAuth] = useState(useAuth())
     const dispatch = useDispatch()
     const params = useParams()
+
     useEffect(() => {
         dispatch(GetUserProfile(params))
         setAuth(isAuth)
     }, [null, params,])
     const st = useSelector(state => state.profile)
 
-
-
     if (!useAuth()) return redirect
+
     return <div >
 
         <ProfileInfo isOwner={userId} profile={st.profile} />

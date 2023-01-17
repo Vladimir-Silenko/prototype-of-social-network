@@ -1,6 +1,5 @@
 import styles from './Users.module.css'
 import { OnpageChanged, } from '../../redux/users-reducer'
-import loader from '../../photo/loader.gif'
 import { Btn } from '../reusable/button'
 import { useState } from 'react'
 import styled from 'styled-components'

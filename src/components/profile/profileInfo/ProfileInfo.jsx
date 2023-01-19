@@ -50,8 +50,6 @@ const ProfileInfo = ({ profile, isOwner }) => {
 
             }
         )
-        // setTimeout(() => {
-        // }, 2000);
 
 
     }

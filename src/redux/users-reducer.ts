@@ -1,4 +1,6 @@
+// import { toggleIsFetchingAC } from './users-reducer';
 import { UserApi } from "../api/useApi"
+import { photosType } from "./profile-reducer"
 const FOLLOW = 'FOLLOW'
 const UNFOLLOW = 'UNFOLLOW'
 const SET_USERS = 'SET_USERS'
@@ -6,16 +8,25 @@ const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE'
 const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING = 'TOGGLE_IS_FOLLOWING'
+
+type UserType = {
+    name: string,
+    id: number,
+    photos: photosType,
+    status: null | string,
+    followed: boolean
+}
+
 let initialstate = {
-    users: [],
+    users: [] as Array<UserType>,
     totalCount: 30,
     pageSize: 100,
     currentPage: 1,
     isFetching: false,
-    toggleFollowing: [],
+    toggleFollowing: [] as Array<number>, // Array of users id
 }
-
-const UsersReduser = (state = initialstate, action) => {
+export type initialstateType = typeof initialstate
+const UsersReduser = (state = initialstate, action: any): initialstateType => {
     switch (action.type) {
         case FOLLOW: {
             return {
@@ -70,17 +81,51 @@ const UsersReduser = (state = initialstate, action) => {
             return state
     }
 }
+type followACType = {
+    type: typeof FOLLOW,
+    userId: number
+}
+export let followAC = (userId: number): followACType => ({ type: FOLLOW, userId })
 
-export let followAC = (userId) => ({ type: FOLLOW, userId })
-export let unFollowAC = (userId) => ({ type: UNFOLLOW, userId })
-export let setUsersAC = (users) => ({ type: SET_USERS, users })
-export let setCurrentPageAC = (currentPage) => ({ type: SET_CURRENT_PAGE, currentPage })
-export let setTotalCountAC = (totalUsersCount) => ({ type: SET_TOTAL_COUNT, count: totalUsersCount })
-export let toggleIsFetchingAC = (isFetching) => ({ type: TOGGLE_IS_FETCHING, isFetching })
-export let toggleIsFollowingAC = (isFetching, userId) => ({ type: TOGGLE_IS_FOLLOWING, isFetching: isFetching, userId })
+type unFollowACType = {
+    type: typeof UNFOLLOW,
+    userId: number
+}
+export let unFollowAC = (userId: number): unFollowACType => ({ type: UNFOLLOW, userId })
 
-export const GetUsersThunkCreator = (currentPage, pageSize) => {
-    return async (dispatch) => {
+type setUsersACType = {
+    type: typeof SET_USERS
+    users: Array<UserType>
+}
+export let setUsersAC = (users: Array<UserType>): setUsersACType => ({ type: SET_USERS, users })
+
+type setCurrentPageACType = {
+    type: typeof SET_CURRENT_PAGE,
+    currentPage: number
+}
+export let setCurrentPageAC = (currentPage: number): setCurrentPageACType => ({ type: SET_CURRENT_PAGE, currentPage })
+
+type setTotalCountACType = {
+    type: typeof SET_TOTAL_COUNT,
+    count: number
+}
+export let setTotalCountAC = (totalUsersCount: number): setTotalCountACType => ({ type: SET_TOTAL_COUNT, count: totalUsersCount })
+
+type toggleIsFetchingACType = {
+    type: typeof TOGGLE_IS_FETCHING,
+    isFetching: boolean
+}
+export let toggleIsFetchingAC = (isFetching: boolean): toggleIsFetchingACType => ({ type: TOGGLE_IS_FETCHING, isFetching })
+
+type toggleIsFollowingACType = {
+    type: typeof TOGGLE_IS_FOLLOWING,
+    isFetching: boolean,
+    userId: number
+}
+export let toggleIsFollowingAC = (isFetching: boolean, userId: number): toggleIsFollowingACType => ({ type: TOGGLE_IS_FOLLOWING, isFetching: isFetching, userId })
+
+export const GetUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return async (dispatch: any) => {
         dispatch(toggleIsFetchingAC(true))
 
         let data = await UserApi.GetAllUsers(currentPage, pageSize)
@@ -92,9 +137,9 @@ export const GetUsersThunkCreator = (currentPage, pageSize) => {
     }
 }
 
-export let OnpageChanged = (pageNumber) => {
+export let OnpageChanged = (pageNumber: number) => {
 
-    return async (dispatch) => {
+    return async (dispatch: any) => {
         dispatch(setCurrentPageAC(pageNumber))
         dispatch(toggleIsFetchingAC(true));
         let data = await UserApi.ChangeUserPage(pageNumber, initialstate.pageSize)
@@ -103,7 +148,7 @@ export let OnpageChanged = (pageNumber) => {
 
     }
 }
-const FollowUnfollow = async (dispatch, userId, apiMethod, actionCreator) => {
+const FollowUnfollow = async (dispatch: any, userId: number, apiMethod: any, actionCreator: any) => {
     dispatch(toggleIsFollowingAC(true, userId))
     let data = await apiMethod(userId)
 
@@ -114,13 +159,13 @@ const FollowUnfollow = async (dispatch, userId, apiMethod, actionCreator) => {
 
 }
 
-export const Follow = (userId) => {
-    return async (dispatch) => {
+export const Follow = (userId: number) => {
+    return async (dispatch: any) => {
         FollowUnfollow(dispatch, userId, UserApi.FollowUser.bind(UserApi), followAC)
     }
 }
-export const UnFollow = (userId) => {
-    return async (dispatch) => {
+export const UnFollow = (userId: number) => {
+    return async (dispatch: any) => {
         FollowUnfollow(dispatch, userId, UserApi.UnFollowUser.bind(UserApi), unFollowAC)
     }
 }

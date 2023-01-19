@@ -8,10 +8,44 @@ const SET_STATUS = 'SET_STATUS'
 const POST_IS_LIKED = 'POST_IS_LIKED'
 const SAVE_PHOTO = 'SAVE_PHOTO'
 const POST_IS_UPDATED = 'POST_IS_UPDATED'
+
+type postType = {
+    id: number
+    post: string
+    likes: number
+    created: number
+    isLiked: boolean
+}
+type contactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
+export type photosType = {
+    small: string | null
+    large: string | null
+}
+
+type profileType = {
+    userId: number
+    lookingForAJob: boolean
+    lookingForAJobDescription: string
+    fullName: string
+    contacts: contactsType
+    photos: photosType
+
+
+}
+
 let initialState = {
-    isUpdated: '',
-    newPostText: '',
-    profile: null,
+    isUpdated: '' as string,
+    newPostText: '' as string,
+    profile: null as profileType | null,
     postData: [
         {
             id: 1,
@@ -32,19 +66,25 @@ let initialState = {
             post: 'When  will you  come back?',
             likes: 15,
             created: new Date().getTime(),
-            isLiked: true,
+            isLiked: false,
         },
-    ],
+    ] as Array<postType>,
     status: ''
 };
-
-const ProfileReducer = (state = initialState, action) => {
+export type InitialstateType = typeof initialState
+const ProfileReducer = (state = initialState, action: any): InitialstateType => {
     switch (action.type) {
         case AddPost: {
-            let newPostText = action.text
+            let newPost = {
+                id: 5,
+                post: action.text,
+                likes: 0,
+                isLiked: false,
+                created: new Date().getTime(),
+            }
             return {
                 ...state,
-                postData: [...state.postData, { id: 5, post: newPostText, likes: 0, }],
+                postData: [...state.postData, newPost],
                 newPostText: ''
             }
 
@@ -53,7 +93,7 @@ const ProfileReducer = (state = initialState, action) => {
         case DELETE_POST: {
             return {
                 ...state,
-                postData: [...state.postData.filter(item => item.id !== action.postId)]
+                postData: [...state.postData.filter(item => item.id != action.postId)]
             }
         }
         case SET_USER_PROFILE: {
@@ -84,8 +124,9 @@ const ProfileReducer = (state = initialState, action) => {
         }
         case SAVE_PHOTO: {
             return {
-                ...state,
-                photos: { ...state.profile, photos: action.photos }
+                ...state, profile: { ...state.profile, photos: action.photos } as profileType
+
+
             }
         }
         case POST_IS_UPDATED: {
@@ -99,26 +140,62 @@ const ProfileReducer = (state = initialState, action) => {
     }
 }
 
-export let addPostActionCreator = (text) => ({ type: AddPost, text });
-export let deletePostAC = (postId) => ({ type: DELETE_POST, postId })
-export let setUserProfileAC = (profile) => ({ type: SET_USER_PROFILE, profile })
-export let setStatusAC = (status) => ({ type: SET_STATUS, status: status })
-export let postIsLikedAC = (liked, itemId, likesCount) => ({ type: POST_IS_LIKED, liked, itemId, likesCount })
-export let savePhotoAC = (photos) => ({ type: SAVE_PHOTO, photos })
-export const profileIsUpdatedAC = (isUpdated) => ({ type: POST_IS_UPDATED, isUpdated })
+type addPostActionCreatorType = {
+    type: typeof AddPost,
+    text: string
+}
+export let addPostActionCreator = (text: string): addPostActionCreatorType => ({ type: AddPost, text });
 
-export const GetUserProfile = (params) => async (dispatch) => {
+type deletePostACType = {
+    type: typeof DELETE_POST,
+    postId: number
+}
+export let deletePostAC = (postId: any): deletePostACType => ({ type: DELETE_POST, postId })
+
+type setUserProfileACType = {
+    type: typeof SET_USER_PROFILE,
+    profile: profileType
+}
+export let setUserProfileAC = (profile: profileType): setUserProfileACType => ({ type: SET_USER_PROFILE, profile })
+
+type setStatusACType = {
+    type: typeof SET_STATUS,
+    status: string
+}
+export let setStatusAC = (status: string): setStatusACType => ({ type: SET_STATUS, status: status })
+
+type postIsLikedACType = {
+    type: typeof POST_IS_LIKED
+    liked: boolean
+    itemId: postType
+    likesCount: number
+}
+export let postIsLikedAC = (liked: boolean, itemId: postType, likesCount: number): postIsLikedACType => ({ type: POST_IS_LIKED, liked, itemId, likesCount })
+
+type savePhotoACType = {
+    type: typeof SAVE_PHOTO,
+    photos: photosType
+}
+export let savePhotoAC = (photos: photosType): savePhotoACType => ({ type: SAVE_PHOTO, photos })
+
+type profileIsUpdatedACType = {
+    type: typeof POST_IS_UPDATED,
+    isUpdated: string
+}
+export const profileIsUpdatedAC = (isUpdated: string): profileIsUpdatedACType => ({ type: POST_IS_UPDATED, isUpdated })
+
+export const GetUserProfile = (params: any) => async (dispatch: any) => {
     let response = await profileApi.GetProfile(params)
 
     dispatch(setUserProfileAC(response))
 
 }
-export const GetUserStatus = (params) => async (dispatch) => {
+export const GetUserStatus = (params: number) => async (dispatch: any) => {
     let response = await profileApi.getStatus(params)
     dispatch(setStatusAC(response.data))
 }
 
-export const UpdateUserStatus = (status) => async (dispatch) => {
+export const UpdateUserStatus = (status: string) => async (dispatch: any) => {
 
     try {
         const response = await profileApi.updateStatus(status)
@@ -128,13 +205,13 @@ export const UpdateUserStatus = (status) => async (dispatch) => {
             console.log('works')
         }
     }
-    catch (error) {
+    catch (error: any) {
         alert(error.message)
     }
 
 
 }
-export const UpdateUserPhoto = (photo) => async (dispatch) => {
+export const UpdateUserPhoto = (photo: any) => async (dispatch: any) => {
     try {
 
         let response = await profileApi.savePhoto(photo)
@@ -142,13 +219,13 @@ export const UpdateUserPhoto = (photo) => async (dispatch) => {
             dispatch(savePhotoAC(response.data.photo))
         }
     }
-    catch (error) {
+    catch (error: any) {
         alert(error.message)
     }
 
 
 }
-export const saveProfile = (profile) => async (dispatch, getState) => {
+export const saveProfile = (profile: profileType) => async (dispatch: any, getState: any) => {
     // const userId = getState().auth.userId
 
     try {
@@ -162,7 +239,7 @@ export const saveProfile = (profile) => async (dispatch, getState) => {
             dispatch(profileIsUpdatedAC('Profile successfully updated'))
         }
     }
-    catch (error) {
+    catch (error: any) {
         alert(error.message)
     }
 

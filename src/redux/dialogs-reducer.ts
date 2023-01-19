@@ -10,7 +10,7 @@ type MessageType = {
     id: number
     message: string
     created: any
-    you?: string
+    you: boolean
 }
 
 const initialstate = {
@@ -27,18 +27,19 @@ const initialstate = {
         [
             {
                 id: 1,
+                you: false,
                 message: "Hey dad! How is it goin'?",
                 created: new Date().getTime()
             },
             {
                 id: 22,
-                you: 'you',
+                you: true,
                 message: "I miss u so much",
                 created: new Date().getTime()
             },
             {
                 id: 21,
-                you: 'you',
+                you: false,
                 message: "I miss u so much",
                 created: new Date().getTime()
             },
@@ -49,18 +50,19 @@ const initialstate = {
             },
             {
                 id: 24,
-                you: 'you',
+                you: true,
                 message: "I hope it will be soon",
                 created: new Date().getTime()
             },
             {
                 id: 26,
-                you: 'you', message: "I hope it will be soon",
+                you: true,
+                message: "I hope it will be soon",
                 created: new Date().getTime()
             },
             {
                 id: 25,
-                you: 'you',
+                you: true,
                 message: "I hope it will be soon",
                 created: new Date().getTime()
             },
@@ -77,7 +79,7 @@ const DialogsReducer = (state = initialstate, action: any): initialStateType => 
                 ...state,
                 messageData: [...state.messageData, {
                     id: state.messageData.length + 1,
-                    you: 'you',
+                    you: true,
                     message: newMessageText,
                     created: new Date().getTime(),
                 }],

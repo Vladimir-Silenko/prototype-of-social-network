@@ -9,7 +9,7 @@ const SET_TOTAL_COUNT = 'SET_TOTAL_COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_FOLLOWING = 'TOGGLE_IS_FOLLOWING'
 
-type UserType = {
+export type UserType = {
     name: string,
     id: number,
     photos: photosType,
@@ -17,7 +17,7 @@ type UserType = {
     followed: boolean
 }
 
-let initialstate = {
+export let initialstate = {
     users: [] as Array<UserType>,
     totalCount: 30,
     pageSize: 100,
@@ -25,8 +25,8 @@ let initialstate = {
     isFetching: false,
     toggleFollowing: [] as Array<number>, // Array of users id
 }
-export type initialstateType = typeof initialstate
-const UsersReduser = (state = initialstate, action: any): initialstateType => {
+export type UsersInitialstateType = typeof initialstate
+const UsersReduser = (state = initialstate, action: any): UsersInitialstateType => {
     switch (action.type) {
         case FOLLOW: {
             return {

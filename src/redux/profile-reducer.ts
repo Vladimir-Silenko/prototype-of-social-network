@@ -1,5 +1,8 @@
+import { ThunkAction } from 'redux-thunk';
+import { Dispatch } from 'react';
 import { stopSubmit } from "redux-form";
 import { profileApi } from "../api/useApi";
+import { AppStateType } from './redux-store';
 
 const AddPost = 'AddPost';
 const DELETE_POST = 'DELETE_POST'
@@ -72,7 +75,7 @@ let initialState = {
     status: ''
 };
 export type InitialstateType = typeof initialState
-const ProfileReducer = (state = initialState, action: any): InitialstateType => {
+const ProfileReducer = (state = initialState, action: ActionsType): InitialstateType => {
     switch (action.type) {
         case AddPost: {
             let newPost = {
@@ -113,7 +116,7 @@ const ProfileReducer = (state = initialState, action: any): InitialstateType => 
             return {
                 ...state,
                 postData: [...state.postData.map(item => {
-                    if (item.id === action.itemId) {
+                    if (item.id === action.item.id) {
                         item.isLiked = action.liked
                         item.likes = action.likesCount
                     }
@@ -139,6 +142,12 @@ const ProfileReducer = (state = initialState, action: any): InitialstateType => 
             return state
     }
 }
+
+// ++++++++++++++++++++++ACTION CREATORS++++++++++++++++++++++
+
+
+type ActionsType = addPostActionCreatorType | deletePostACType | setUserProfileACType |
+    setStatusACType | postIsLikedACType | savePhotoACType | profileIsUpdatedACType
 
 type addPostActionCreatorType = {
     type: typeof AddPost,
@@ -167,10 +176,10 @@ export let setStatusAC = (status: string): setStatusACType => ({ type: SET_STATU
 type postIsLikedACType = {
     type: typeof POST_IS_LIKED
     liked: boolean
-    itemId: postType
+    item: postType
     likesCount: number
 }
-export let postIsLikedAC = (liked: boolean, itemId: postType, likesCount: number): postIsLikedACType => ({ type: POST_IS_LIKED, liked, itemId, likesCount })
+export let postIsLikedAC = (liked: boolean, item: postType, likesCount: number): postIsLikedACType => ({ type: POST_IS_LIKED, liked, item, likesCount })
 
 type savePhotoACType = {
     type: typeof SAVE_PHOTO,
@@ -184,18 +193,22 @@ type profileIsUpdatedACType = {
 }
 export const profileIsUpdatedAC = (isUpdated: string): profileIsUpdatedACType => ({ type: POST_IS_UPDATED, isUpdated })
 
-export const GetUserProfile = (params: any) => async (dispatch: any) => {
+
+//++++++++++++++++THUNKS+++++++++++++++++++
+
+type ThunkType = ThunkAction<Promise<void>, AppStateType, unknown, ActionsType>
+export const GetUserProfile = (params: number): ThunkType => async (dispatch) => {
     let response = await profileApi.GetProfile(params)
 
     dispatch(setUserProfileAC(response))
 
 }
-export const GetUserStatus = (params: number) => async (dispatch: any) => {
+export const GetUserStatus = (params: number): ThunkType => async (dispatch) => {
     let response = await profileApi.getStatus(params)
     dispatch(setStatusAC(response.data))
 }
 
-export const UpdateUserStatus = (status: string) => async (dispatch: any) => {
+export const UpdateUserStatus = (status: string): ThunkType => async (dispatch) => {
 
     try {
         const response = await profileApi.updateStatus(status)
@@ -211,7 +224,7 @@ export const UpdateUserStatus = (status: string) => async (dispatch: any) => {
 
 
 }
-export const UpdateUserPhoto = (photo: any) => async (dispatch: any) => {
+export const UpdateUserPhoto = (photo: any): ThunkType => async (dispatch) => {
     try {
 
         let response = await profileApi.savePhoto(photo)
@@ -225,13 +238,14 @@ export const UpdateUserPhoto = (photo: any) => async (dispatch: any) => {
 
 
 }
-export const saveProfile = (profile: profileType) => async (dispatch: any, getState: any) => {
+export const saveProfile = (profile: profileType): ThunkType => async (dispatch, getState: () => AppStateType) => {
     // const userId = getState().auth.userId
 
     try {
         let response = await profileApi.saveProfile(profile)
 
         if (response.data.resultCode !== 0) {
+            // @ts-ignore
             dispatch(stopSubmit('profile', { _error: response.data.messages[0] }))
             return Promise.reject(response.data.messages[0])
         }

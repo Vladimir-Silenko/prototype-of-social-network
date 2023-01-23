@@ -1,15 +1,21 @@
-import { Logout } from '../../redux/auth-reducer.ts';
+import { Logout } from '../../redux/auth-reducer';
 import { useDispatch, useSelector, } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import styles from './header.module.css'
 import { Btn } from '../reusable/button';
-const Header = (props) => {
+import React from 'react';
+import { AppStateType } from '../../redux/redux-store';
+
+const Header: React.FC = () => {
     // debugger
-    const auth = useSelector(state => state.auth.isAuth)
-    const dispatch = useDispatch()
+    const auth: boolean = useSelector((state: AppStateType) => state.auth.isAuth)
+
+    const dispatch: any = useDispatch()
+
     return <div className={styles.header}>
 
         <header className={styles.header}>
+
             <h1 className={styles.MySocial}>MySocial</h1>
             <div>
                 {

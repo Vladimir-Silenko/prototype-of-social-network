@@ -11,7 +11,7 @@ import loader from '../../photo/loader.gif'
 const Users: React.FC = () => {
     const st: UsersInitialstateType = useSelector((state: any) => state.users)
     const dispatch: any = useDispatch()
-    const pagesCount = Math.ceil(st.totalCount / st.pageSize) //вычисляем количество страниц, и округляем
+    const pagesCount: number = Math.ceil(st.totalCount / st.pageSize) //вычисляем количество страниц, и округляем
     const userPhotoUrl = 'https://thumbs.dreamstime.com/b/%D0%BE%D1%87%D0%B5%D0%BD%D1%8C-%D1%81%D0%B5%D1%80%D1%8C%D0%B5%D0%B7%D0%BD%D1%8B%D0%B9-%D0%BC-%D0%B0-%D0%B5%D0%BD%D0%B5%D1%86-39968623.jpg'
     const redirect = useRedirect()
     useEffect(() => {

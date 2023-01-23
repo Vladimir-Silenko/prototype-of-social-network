@@ -23,7 +23,6 @@ type Props = {
 }
 
 const Messages: React.FC<Props> = ({ content, time, you }) => {
-    debugger
     return (
         <Message you={you}>
             <p>{content}</p>

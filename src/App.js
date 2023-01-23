@@ -17,6 +17,7 @@ const Dialogs = React.lazy(() => import('./components/dialogs/Dialogs'))
 const ProfileContainer = React.lazy(() => import('./components/profile/profileContainer'))
 
 const App = (props) => {
+
   const init = useSelector(state => state.app.initialise)
   const dispatch = useDispatch()
 

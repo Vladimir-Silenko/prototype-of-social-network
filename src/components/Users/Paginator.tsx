@@ -20,7 +20,8 @@ type PropsType = {
 }
 type pageItemProps = {
     currentPage: number
-    key: any
+    id: any
+    key: number
     onClick: any
 }
 
@@ -34,8 +35,8 @@ export const Paginator: React.FC<PropsType> = ({ st, dispatch, pagesCount }) => 
     // debugger
     let pages: Array<number> = []
     for (let i = 1; i <= pagesCount; i++) { pages.push(i) }
-    let pageAmount = 10
-    let [leftborder, setLeftborder] = useState(1)
+    const pageAmount: number = 10
+    let [leftborder, setLeftborder] = useState<number>(1)
     let rightborder = leftborder + pageAmount - 1
 
     return <Container>
@@ -47,6 +48,7 @@ export const Paginator: React.FC<PropsType> = ({ st, dispatch, pagesCount }) => 
                     if (item >= leftborder && item <= rightborder) {
                         return <PageItem
                             currentPage={st.currentPage}
+                            id={item}
                             key={item}
                             onClick={() => dispatch(OnpageChanged(item))}>
                             {item}

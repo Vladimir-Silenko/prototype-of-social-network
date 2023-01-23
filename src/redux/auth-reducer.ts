@@ -3,7 +3,7 @@ import { authApi, securityApi } from "../api/useApi"
 const SET_USER_DATA = 'SET_USER_DATA'
 const GET_CAPTCHA_URL = 'GET_CAPTCHA_URL'
 
-export type InitialstateType = {
+export type authInitialstateType = {
     captchaUrl: string | null,
     userId: number | null,
     email: string | null,
@@ -13,7 +13,7 @@ export type InitialstateType = {
     isAuth: boolean,
 }
 
-let initialstate: InitialstateType = {
+let initialstate: authInitialstateType = {
     captchaUrl: null,
     userId: null,
     email: null,
@@ -23,7 +23,7 @@ let initialstate: InitialstateType = {
     isAuth: false,
 }
 
-const authReducer = (state = initialstate, action: any): InitialstateType => {
+const authReducer = (state = initialstate, action: any): authInitialstateType => {
     switch (action.type) {
         case SET_USER_DATA: {
             return {

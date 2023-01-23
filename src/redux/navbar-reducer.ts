@@ -2,17 +2,17 @@ import { authApi } from "../api/useApi"
 
 const SET_CURRENT_USER: string = 'SET_CURRENT_USER'
 
-type userIconType = {
+export type userIconType = {
     name: string,
     ava: string,
     id: number,
 }
-type InitialStateType = {
+export type NavbarInitialStateType = {
     friends: Array<userIconType>,
     usersProfile: number,
 }
 
-let initialstate: InitialStateType = {
+let initialstate: NavbarInitialStateType = {
     friends: [
         { name: 'Alisa', ava: 'https://krot.info/uploads/posts/2021-03/1615285482_44-p-kotenok-gav-art-kartinki-46.jpg', id: 1 },
         { name: 'Karina', ava: 'https://funart.pro/uploads/posts/2021-10/1633940898_1-funart-pro-p-zlaya-taksa-zhivotnie-krasivo-foto-2.jpg', id: 2 },
@@ -22,7 +22,7 @@ let initialstate: InitialStateType = {
 }
 
 
-const NavbarReducer = (state = initialstate, action: any): InitialStateType => {
+const NavbarReducer = (state = initialstate, action: any): NavbarInitialStateType => {
     switch (action.type) {
         case SET_CURRENT_USER: {
             return {

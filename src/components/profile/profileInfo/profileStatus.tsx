@@ -1,12 +1,18 @@
-import { useEffect } from "react"
+import React, { ChangeEvent, useEffect } from "react"
 import { useState } from "react"
 import { GetUserStatus, UpdateUserStatus } from "../../../redux/profile-reducer"
 
-const ProfileStatus = ({ params, dispatch, status }) => {
-    const [statusText, setStatusText] = useState(status)
-    const [editMode, setState] = useState(false)
+type ProfileStatusPropstype = {
+    params: number
+    dispatch: any
+    status: string
+}
 
-    const onStatusChange = (e) => {
+const ProfileStatus: React.FC<ProfileStatusPropstype> = ({ params, dispatch, status }) => {
+    const [statusText, setStatusText] = useState<string>(status)
+    const [editMode, setState] = useState<boolean>(false)
+
+    const onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {
         setStatusText(e.currentTarget.value)
     }
 

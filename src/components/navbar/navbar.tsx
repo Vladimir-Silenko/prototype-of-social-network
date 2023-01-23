@@ -1,18 +1,20 @@
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink, useParams } from 'react-router-dom'
-import { SetCurrentUser } from '../../redux/navbar-reducer.ts'
+import { SetCurrentUser } from '../../redux/navbar-reducer'
+import { AppStateType } from '../../redux/redux-store'
 import Friendlist from './friendlist/Friendlist'
 import classes from './navbar.module.css'
-let Navbar = (props) => {
-    const dispatch = useDispatch()
-    const currentUser = useSelector(state => state.navbar.usersProfile)
+let Navbar: React.FC = () => {
+    const dispatch = useDispatch<any>()
+    const currentUser = useSelector<AppStateType>(state => state.navbar.usersProfile)
     useEffect(() => { dispatch(SetCurrentUser()) }, [])
     const params = useParams()
-    let userId = params.userId
+    let userId: any = params.userId
     if (!userId) { userId = currentUser }
     let classNames = require('classnames')
-    let classSwitch = navData => navData.isActive ? classNames(classes.item, classes.activeLink) : classes.item
+    let classSwitch = (navData: any) => navData.isActive ? classNames(classes.item, classes.activeLink) : classes.item
+
     return <div>
         <nav className={classes.nav}>
 
@@ -23,7 +25,7 @@ let Navbar = (props) => {
             <div ><NavLink to="settings" className={classSwitch} >Settings</NavLink></div>
             <div ><NavLink to="Users" className={classSwitch} >Users</NavLink></div>
         </nav>
-        <Friendlist friendsData={props.friendsData} />
+        <Friendlist />
     </div>
 }
 export default Navbar

@@ -37,7 +37,7 @@ type profileType = {
     lookingForAJobDescription: string
     fullName: string
     contacts: contactsType
-    photos: photosType
+    photos?: photosType
 
 
 }

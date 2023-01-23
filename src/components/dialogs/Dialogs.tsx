@@ -4,14 +4,18 @@ import Messages from './messages/Messages';
 import SendMessageContainer from './messages/SendMessageContainer';
 import { useSelector } from 'react-redux';
 import { useRedirect } from '../../hooks/useRedirect';
-const Dialogs = (props) => {
-    const auth = useSelector(state => state.auth.isAuth)
+import { AppStateType } from '../../redux/redux-store';
+import { DialogUserType, MessageType } from '../../redux/dialogs-reducer';
+
+
+const Dialogs: React.FC<any> = ({ store }) => {
+    const auth = useSelector<AppStateType>(state => state.auth.isAuth)
     const redirect = useRedirect()
 
-    let dlgs = useSelector(state => state.messages.dialogsData)
-    let msgs = useSelector(state => state.messages.messageData)
-    let dialogs = dlgs.map(item => <DialogItem ava={item.ava} name={item.name} surname={item.surname} key={item.id} />);
-    let messages = msgs.map(item => <Messages time={item.created} key={item.id} content={item.message} you={item.you} />)
+    let dlgs: any = useSelector<AppStateType>(state => state.messages.dialogsData)
+    let msgs: any = useSelector<AppStateType>(state => state.messages.messageData)
+    let dialogs = dlgs.map((item: DialogUserType) => <DialogItem ava={item.ava} name={item.name} surname={item.surname} key={item.id} id={item.id} />);
+    let messages = msgs.map((item: MessageType) => <Messages time={item.created} key={item.id} content={item.message} you={item.you} />)
     if (!auth) return redirect
     return (
         <div className={styles.container}>
@@ -23,7 +27,7 @@ const Dialogs = (props) => {
                     {messages}
                 </div>
                 <SendMessageContainer
-                    store={props.store} />
+                    store={store} />
             </div>
 
         </div>

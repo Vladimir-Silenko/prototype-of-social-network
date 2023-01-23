@@ -1,12 +1,12 @@
 const AddMessage = 'AddMessage'
-type UserType = {
+export type DialogUserType = {
     name: string
     surname: string
-    ava: string | null
+    ava: string | undefined
     age?: number
     id: number
 }
-type MessageType = {
+export type MessageType = {
     id: number
     message: string
     created: any
@@ -21,7 +21,7 @@ const initialstate = {
         { name: 'Elmishan', surname: 'Aliev', ava: 'https://militaryarms.ru/wp-content/uploads/2021/07/31089611.jpg', age: 55, id: 4, },
         { name: 'Inga', surname: 'Alieva', ava: 'https://pbs.twimg.com/profile_images/755466885953679360/cKVxXXWg_400x400.jpg', age: 28, id: 5, },
         { name: 'Dasha', surname: 'Deshko', ava: 'https://pic.rutubelist.ru/user/3f/a4/3fa484531693f2716dc6d5f4ec102cff.jpg', age: 27, id: 6, },
-    ] as Array<UserType>,
+    ] as Array<DialogUserType>,
     newMessageText: '' as string,
     messageData:
         [
